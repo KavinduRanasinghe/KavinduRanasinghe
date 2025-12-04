@@ -372,7 +372,7 @@ const Home = () => (
         <span className="text-blue-600 dark:text-blue-500">Ayubowan!</span> I'm Kavindu.
       </h1>
       <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-8 font-light">
-  A<strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
+  A <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
   <strong className="font-semibold text-slate-900 dark:text-white"> Researcher</strong> driven by curiosity, code, and a passion for innovation. 
 Using Full-stack Engineering and AI/ML expertise to craft solutions that address real-world challenges.  <br/>I strongly believe that a taker mindset should transform into a giver mindset through meaningful community service, contributing back to the society that shapes us.
 </p>
