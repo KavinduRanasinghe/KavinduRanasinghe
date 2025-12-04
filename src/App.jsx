@@ -9,6 +9,12 @@ import {
   Quote, Send
 } from 'lucide-react';
 
+import profilePic from './assets/profile.png';
+
+// --- Assets ---
+// NOTE: To use your own photo, uncomment the line below and place 'profile.png' in 'src/assets/'
+// import profilePic from './assets/profile.png'; 
+
 // ==========================================
 // 1. DATA SECTION
 // ==========================================
@@ -19,8 +25,8 @@ const profile = {
   email: "kavindu.ranasinghe07@gmail.com",
   linkedin: "https://www.linkedin.com/in/kavindu-ranasinghe",
   github: "https://github.com/KavinduRanasinghe",
-  // Placeholder image - Replace with your actual headshot URL
-  image: "E:/Projects/kavinduranasinghe - personal portfolio/kavinduranasinghe/src/assets/profile.png",
+  // Use a placeholder URL. If using local image, set this to: image: profilePic
+  image: profilePic,
 };
 
 const highlights = [
@@ -128,16 +134,16 @@ const community = [
   { role: "Microsoft Student Ambassador", org: "Microsoft", period: "Aug 2024 - Present", category: "MLSA", type: "Global Program", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", link: "https://mvp.microsoft.com/studentambassadors/certificate/7d6f5da2-ac9c-40f9-b47a-d7658099c9d6", desc: "Promoting Azure, GitHub, and Visual Studio through events and workshops. Creating inclusive learning environments to empower students with cloud and automation skills." },
   { role: "Founding Chair", org: "Microsoft Learn Student Community (WUSL)", period: "Present", category: "MLSA", type: "Community", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Established MLSC at WUSL. Organized workshops on Azure and Power Apps to empower students with Microsoft technologies." },
   { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Nov 2023 - Present", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Leading STEM education initiatives and delivering a structured curriculum covering Scratch, MicroBits, Python, and Arduino to empower students with coding and electronics skills." },
-  { role: "Webmaster", org: "SEDS Wayamba", period: "2024 - Present", category: "SEDS", type: "Space Tech", color: "bg-black", icon: <Rocket size={24} />, desc: "Managing the SEDS Wayamba website." },
-  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Aug 2024 - Aug 2025", category: "STEMUP", type: "Leadership", color: "bg-emerald-600", icon: <Users size={24} />, desc: "Led the regional community, coordinating volunteers." },
-  { role: "Public Visibility Team Member", org: "IEEE EMBS AXON 2025", period: "Mar 2025 - May 2025", category: "IEEE", type: "Volunteer", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Managing public relations and visibility strategies." },
-  { role: "Program Team Member", org: "IEEE Let'sTalk Adhoc Committee", period: "Dec 2024 - May 2025", category: "IEEE", type: "Program", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Curating content and managing sessions for the Let'sTalk series." },
-  { role: "Chairperson - Career Compass", org: "IEEE SB WUSL", period: "Dec 2024 - Feb 2025", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Directed the 'Career Compass' session." },
-  { role: "Team Lead - DXP", org: "AIESEC in Wayamba", period: "May 2024 - Dec 2024", category: "AIESEC", type: "Leadership", color: "bg-[#037Ef3]", logo: "https://cdn.simpleicons.org/aiesec/white", desc: "Led the Digital Experience (DXP) team." },
-  { role: "Ambassador (IEEEXtreme 18.0)", org: "IEEE SB WUSL", period: "Apr 2024 - Dec 2024", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Promoted the 24-hour coding competition." },
-  { role: "Webmaster", org: "IEEE SB WUSL", period: "Jan 2024 - Dec 2024", category: "IEEE", type: "Technical", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Maintained and developed the Student Branch website." },
-  { role: "Chairperson - WayaXtreme 3.0", org: "IEEE SB WUSL", period: "Jun 2024 - Oct 2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://placehold.co/200x200/00629B/ffffff?text=WayaXtreme", desc: "Led the organizing committee for the university's premier hackathon." },
-  { role: "Volunteer", org: "STEMUP Educational Foundation", period: "Nov 2023 - Aug 2024", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Conducted educational sessions on Scratch, MicroBits, Python, and Arduino." }
+  { role: "Webmaster", org: "SEDS Wayamba", period: "2024 - Present", category: "SEDS", type: "Space Tech", color: "bg-black", icon: <Rocket size={24} />, desc: "Managing the SEDS Wayamba website and aligning content with the organization's goals for space exploration projects." },
+  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Aug 2024 - Aug 2025", category: "STEMUP", type: "Leadership", color: "bg-emerald-600", icon: <Users size={24} />, desc: "Led the regional community, coordinating volunteers and overseeing the delivery of STEM education programs across the province." },
+  { role: "Public Visibility Team Member", org: "IEEE EMBS AXON 2025", period: "Mar 2025 - May 2025", category: "IEEE", type: "Volunteer", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Managing public relations and visibility strategies for the AXON 2025 event under the Engineering in Medicine and Biology Society." },
+  { role: "Program Team Member", org: "IEEE Let'sTalk Adhoc Committee", period: "Dec 2024 - May 2025", category: "IEEE", type: "Program", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Curating content and managing sessions for the Let'sTalk series, focusing on professional development for students." },
+  { role: "Chairperson - Career Compass", org: "IEEE SB WUSL", period: "Dec 2024 - Feb 2025", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Directed the 'Career Compass' session at the Student Leadership Institute (SLI), bridging the gap between academia and industry." },
+  { role: "Team Lead - DXP", org: "AIESEC in Wayamba", period: "May 2024 - Dec 2024", category: "AIESEC", type: "Leadership", color: "bg-[#037Ef3]", logo: "https://cdn.simpleicons.org/aiesec/white", desc: "Led the Digital Experience (DXP) team, driving digital engagement strategies and enhancing the online presence of AIESEC in Wayamba." },
+  { role: "Ambassador (IEEEXtreme 18.0)", org: "IEEE SB WUSL", period: "Apr 2024 - Dec 2024", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Promoted the 24-hour coding competition, mentoring teams and ensuring high participation from the university." },
+  { role: "Webmaster", org: "IEEE SB WUSL", period: "Jan 2024 - Dec 2024", category: "IEEE", type: "Technical", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Maintained and developed the Student Branch website, ensuring up-to-date content and a modern user interface." },
+  { role: "Chairperson - WayaXtreme 3.0", org: "IEEE SB WUSL", period: "Jun 2024 - Oct 2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://placehold.co/200x200/00629B/ffffff?text=WayaXtreme", desc: "Led the organizing committee for the university's premier hackathon, managing logistics and participant experience." },
+  { role: "Volunteer", org: "STEMUP Educational Foundation", period: "Nov 2023 - Aug 2024", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Conducted educational sessions on Scratch, MicroBits, Python, and Arduino, directly mentoring students and fostering technical literacy." }
 ];
 
 const sessions = [
@@ -218,6 +224,49 @@ const TechStackMarquee = () => {
             <img src={skill.icon} alt={skill.name} className="w-6 h-6 object-contain" />
             <span className="font-semibold text-slate-700 dark:text-slate-300">{skill.name}</span>
           </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Bottom Navigation (Mobile/Footer style)
+const BottomNav = () => {
+  const navItems = [
+    { path: '/', label: 'About', icon: <Users size={20} /> },
+    { path: '/research', label: 'Research', icon: <BookOpen size={20} /> },
+    { path: '/experience', label: 'Experience', icon: <Briefcase size={20} /> },
+    { path: '/community', label: 'Volunteering', icon: <Globe size={20} /> },
+    { path: '/gallery', label: 'Gallery', icon: <ImageIcon size={20} /> },
+    { path: '/contact', label: 'Contact', icon: <Mail size={20} /> },
+  ];
+
+  return (
+    <div className="mt-24 mb-12 border-t border-slate-200 dark:border-slate-800 pt-12">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Explore More</h3>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 md:mt-0">Continue browsing the portfolio</p>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        {navItems.map((item) => (
+          <NavLink 
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) => `
+              flex items-center justify-center p-4 rounded-xl border transition-all duration-300 group
+              ${isActive 
+                ? 'bg-slate-900 dark:bg-white border-transparent text-white dark:text-black shadow-lg transform scale-105' 
+                : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }
+            `}
+          >
+            <div className="flex flex-col items-center gap-2">
+               <div className={`p-2 rounded-full transition-colors group-hover:bg-slate-100 dark:group-hover:bg-slate-800`}>
+                  {item.icon}
+               </div>
+               <span className="text-sm font-bold tracking-wide">{item.label}</span>
+            </div>
+          </NavLink>
         ))}
       </div>
     </div>
@@ -351,15 +400,7 @@ const Home = () => (
       <TechStackMarquee />
     </div>
 
-    <div className="opacity-0 animate-fade-in-up animate-stagger-2">
-      <div className="flex items-center gap-3 mb-6 px-2">
-        <div className="p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-500 rounded-lg">
-          <Github size={20} />
-        </div>
-        <h3 className="font-bold text-slate-900 dark:text-white text-xl">Coding Activity</h3>
-      </div>
-      <GitHubStats />
-    </div>
+    {/* GitHub Stats Section removed as requested */}
 
     <Testimonials />
 
@@ -844,7 +885,8 @@ const Layout = ({ children }) => {
               <div className="bg-white dark:bg-[#0a0a0a] rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl text-center relative overflow-hidden group hover-scale animate-slide-in-left">
                 <div className="w-40 h-40 mx-auto bg-slate-100 dark:bg-slate-900 rounded-[1.5rem] mb-6 overflow-hidden relative shadow-inner border border-slate-100 dark:border-slate-800 group-hover:scale-105 transition-transform duration-500">
                     <div className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-slate-300 dark:text-slate-700">KR</div>
-                    {/* Uncomment for real image: <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" /> */}
+                    {/* Placeholder image logic: if profile.image is valid, it shows. If null, initials show. */}
+                    <img src={profile.image} alt={profile.name} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
                 
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">{profile.name}</h1>
@@ -887,6 +929,9 @@ const Layout = ({ children }) => {
           <div className="lg:col-span-8 xl:col-span-9 min-h-[500px]">
              {children}
              
+             {/* Bottom Navigation */}
+             <BottomNav />
+
              {/* Footer */}
              <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-60">
               <p className="text-xs text-slate-400 dark:text-slate-600">
