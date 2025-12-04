@@ -6,14 +6,23 @@ import {
   MapPin, Calendar, ChevronRight, Menu, X, Rocket, Code, 
   Megaphone, Users, Layout as LayoutIcon, Mic, Radio, Eye, Terminal, ExternalLink, BookOpen, Filter,
   Cpu, Database, Server, Layers, Image as ImageIcon, Video, Presentation, Clock, GraduationCap, CheckCircle,
-  Quote, Send
+  Quote, Send, ChevronLeft
 } from 'lucide-react';
 
+// --- Assets Imports ---
 import profilePic from './assets/profile.png';
 
-// --- Assets ---
-// NOTE: To use your own photo, uncomment the line below and place 'profile.png' in 'src/assets/'
-// import profilePic from './assets/profile.png'; 
+// Gallery Imports
+import ieeeWebmasterImg from './assets/gallery/ieee_webmaster.jpg';
+import maySedsImg from './assets/gallery/may_seds.jpg';
+import mlsaImg from './assets/gallery/mlsa.jpg';
+import roboticsLabImg from './assets/gallery/RoboticsLab.png';
+import sedsExcomImg from './assets/gallery/seds_excom.jpg';
+import stemupImg from './assets/gallery/stemup.jpg';
+import stemup1Img from './assets/gallery/stemup1.jpg';
+import techxImg from './assets/gallery/techx.jpg';
+import wayaxtremeImg from './assets/gallery/wayaxtreme1_0.jpg';
+import xtremeAmbassadorImg from './assets/gallery/xtremeambassador.jpg';
 
 // ==========================================
 // 1. DATA SECTION
@@ -25,8 +34,7 @@ const profile = {
   email: "kavindu.ranasinghe07@gmail.com",
   linkedin: "https://www.linkedin.com/in/kavindu-ranasinghe",
   github: "https://github.com/KavinduRanasinghe",
-  // Use a placeholder URL. If using local image, set this to: image: profilePic
-  image: profilePic,
+  image: profilePic
 };
 
 const highlights = [
@@ -48,6 +56,18 @@ const education = [
     school: "Wayamba University of Sri Lanka",
     period: "2022 - 2025",
     desc: "Focused on Mathematics, Statistics, Computing, and Management Information Systems."
+  },
+  {
+    degree: "Secondary Education",
+    school: "Ananda College Colombo",
+    period: "2012 - 2020",
+    desc: "Completed GCE Advanced Level in Physical Science stream."
+  },
+  {
+    degree: "Primary Education",
+    school: "Central College Bibiladeniya",
+    period: "2007 - 2011",
+    desc: "Completed early primary education."
   }
 ];
 
@@ -66,6 +86,14 @@ const experience = [
     type: "Full-time",
     location: "Colombo, Sri Lanka",
     desc: "Specializing in full-stack development (Java, Spring Boot) for enterprise applications in an agile environment. Contributing to high-performance microservices and scalable architecture."
+  },
+  {
+    company: "DeepLearning.AI",
+    role: "Tester",
+    period: "Jun 2023 - Present",
+    type: "Part-time",
+    location: "Remote",
+    desc: "Beta testing AI courses and content quality assurance. Key contributions include testing and feedback for the AI4G (AI for Good) specialization."
   },
   {
     company: "RoboticGen",
@@ -155,12 +183,16 @@ const sessions = [
 ];
 
 const galleryImages = [
-  { src: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=1000&auto=format&fit=crop", caption: "Leading IEEEXtreme Awareness Session" },
-  { src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1000&auto=format&fit=crop", caption: "Speaking at LeaderCon 2025" },
-  { src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop", caption: "Mentoring Students at WayaXtreme" },
-  { src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1000&auto=format&fit=crop", caption: "AIESEC Team Building" },
-  { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop", caption: "Microsoft Student Ambassador Meetup" },
-  { src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1000&auto=format&fit=crop", caption: "Collaborating with IEEE MGA SAC Team" },
+  { src: roboticsLabImg, caption: "Robotics Lab Session" },
+  { src: ieeeWebmasterImg, caption: "IEEE Student Branch Webmaster" },
+  { src: wayaxtremeImg, caption: "Organizing WayaXtreme 1.0" },
+  { src: xtremeAmbassadorImg, caption: "IEEEXtreme Ambassador" },
+  { src: stemupImg, caption: "STEMUP Educational Session" },
+  { src: stemup1Img, caption: "Mentoring Students at STEMUP" },
+  { src: mlsaImg, caption: "Microsoft Student Ambassador Event" },
+  { src: sedsExcomImg, caption: "SEDS Executive Committee" },
+  { src: techxImg, caption: "TechX Session" },
+  { src: maySedsImg, caption: "SEDS May Gathering" },
 ];
 
 const skills = [
@@ -340,13 +372,17 @@ const Home = () => (
         <span className="text-blue-600 dark:text-blue-500">Ayubowan!</span> I'm Kavindu.
       </h1>
       <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-8 font-light">
-        I am a <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and <strong className="font-semibold text-slate-900 dark:text-white">Researcher</strong> driven by curiosity and code. 
-        Currently, I am actively looking for <span className="inline-block px-3 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium mx-1 border border-blue-100 dark:border-blue-800/50">Research Assistant</span> opportunities where I can apply my expertise in Full-stack Engineering and AI/ML to solve complex, real-world problems.
-      </p>
+  I am a <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
+  <strong className="font-semibold text-slate-900 dark:text-white"> Researcher</strong> driven by curiosity, code, and a passion for innovation. 
+Using Full-stack Engineering and AI/ML expertise to craft solutions that address real-world challenges.  <br/>I strongly believe that a taker mindset should transform into a giver mindset through meaningful community service, contributing back to the society that shapes us.
+</p>
+
     </div>
 
     {/* Education & Certifications Section */}
     <div className="opacity-0 animate-fade-in-up animate-stagger-1 grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      {/* Education */}
       <div className="space-y-6">
         <div className="flex items-center gap-3 px-2">
           <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-500 rounded-lg">
@@ -366,6 +402,7 @@ const Home = () => (
         ))}
       </div>
 
+      {/* Certifications */}
       <div className="space-y-6">
         <div className="flex items-center gap-3 px-2">
           <div className="p-2 bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-500 rounded-lg">
@@ -390,6 +427,7 @@ const Home = () => (
       </div>
     </div>
 
+    {/* Tech Stack Section */}
     <div className="opacity-0 animate-fade-in-up animate-stagger-2">
       <div className="flex items-center gap-3 mb-6 px-2">
         <div className="p-2 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-500 rounded-lg">
@@ -885,7 +923,7 @@ const Layout = ({ children }) => {
               <div className="bg-white dark:bg-[#0a0a0a] rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl text-center relative overflow-hidden group hover-scale animate-slide-in-left">
                 <div className="w-40 h-40 mx-auto bg-slate-100 dark:bg-slate-900 rounded-[1.5rem] mb-6 overflow-hidden relative shadow-inner border border-slate-100 dark:border-slate-800 group-hover:scale-105 transition-transform duration-500">
                     <div className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-slate-300 dark:text-slate-700">KR</div>
-                    {/* Placeholder image logic: if profile.image is valid, it shows. If null, initials show. */}
+                    {/* Use a placeholder URL. If using local image, set this to: image: profilePic */}
                     <img src={profile.image} alt={profile.name} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
                 
@@ -918,6 +956,7 @@ const Layout = ({ children }) => {
                 <div className="flex justify-center gap-3 mb-8">
                   <a href={profile.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-[#0077b5] hover:text-white dark:hover:bg-[#0077b5] dark:hover:text-white transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"><Linkedin size={18} /></a>
                   <a href={profile.github} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"><Github size={18} /></a>
+                  <button onClick={() => setDarkMode(!darkMode)} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-amber-100 hover:text-amber-600 dark:hover:bg-amber-900/30 dark:hover:text-amber-400 transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">{darkMode ? <Sun size={18} /> : <Moon size={18} />}</button>
                 </div>
 
                 <a href={`mailto:${profile.email}`} className="block w-full py-4 px-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-black rounded-xl font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-slate-200 dark:shadow-none">Contact Me</a>
@@ -930,11 +969,11 @@ const Layout = ({ children }) => {
              {children}
              
              {/* Bottom Navigation */}
-             <BottomNav />
+             {/* <BottomNav /> */}
 
              {/* Footer */}
-             <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-60">
-              <p className="text-xs text-slate-400 dark:text-slate-600">
+             <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-100">
+              <p className="text-xs text-slate-400 dark:text-slate-600 ">
                 © {new Date().getFullYear()} Kavindu Ranasinghe.
               </p>
             </footer>
