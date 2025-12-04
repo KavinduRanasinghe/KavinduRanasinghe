@@ -20,7 +20,7 @@ const profile = {
   linkedin: "https://www.linkedin.com/in/kavindu-ranasinghe",
   github: "https://github.com/KavinduRanasinghe",
   // Placeholder image - Replace with your actual headshot URL
-  image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop"
+  image: "E:/Projects/kavinduranasinghe - personal portfolio/kavinduranasinghe/src/assets/profile.png",
 };
 
 const highlights = [
