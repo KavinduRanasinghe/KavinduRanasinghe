@@ -40,8 +40,13 @@ const profile = {
 const highlights = [
   { date: "2025", text: "Appointed Section Lead for IEEEXtreme 19.0, leading national initiatives.", type: "Leadership" },
   { date: "Present", text: "Conducting research on real-time IoT data streaming for GIS applications.", type: "Research" },
-  { date: "2024", text: "Led the team to achieve 3rd highest participant count globally for IEEEXtreme.", type: "Award" },
-  { date: "2024", text: "Developed 'SusFaceGen', a GenAI tool for law enforcement facial composites.", type: "Project" }
+  { 
+    date: "2024", 
+    text: "Secured 2nd Runners Up at Predicta Datathon, organized by IEEE Student Branch of University of Peradeniya.", 
+    type: "Award",
+    link: "https://ieee.soc.pdn.ac.lk/events/predicta#h.8qvoeey5ijtl"
+  },
+    { date: "2024", text: "Developed 'SusFaceGen', a GenAI tool for law enforcement facial composites.", type: "Project" }
 ];
 
 const education = [
@@ -182,17 +187,48 @@ const sessions = [
   { title: "Scratch Programming (Parts 1 & 2)", org: "STEMUP Educational Foundation", role: "Instructor", date: "Nov - Dec 2023", category: "Workshop", desc: "Taught block-based coding to beginners to foster early interest in computer science." }
 ];
 
+// --- Gallery Data ---
 const galleryImages = [
-  { src: roboticsLabImg, caption: "Robotics Lab Session" },
-  { src: ieeeWebmasterImg, caption: "IEEE Student Branch Webmaster" },
-  { src: wayaxtremeImg, caption: "Organizing WayaXtreme 1.0" },
-  { src: xtremeAmbassadorImg, caption: "IEEEXtreme Ambassador" },
-  { src: stemupImg, caption: "STEMUP Educational Session" },
-  { src: stemup1Img, caption: "Mentoring Students at STEMUP" },
-  { src: mlsaImg, caption: "Microsoft Student Ambassador Event" },
-  { src: sedsExcomImg, caption: "SEDS Executive Committee" },
-  { src: techxImg, caption: "TechX Session" },
-  { src: maySedsImg, caption: "SEDS May Gathering" },
+  { 
+    src: roboticsLabImg, 
+    caption: "Robotics Lab Session" 
+  },
+  { 
+    src: ieeeWebmasterImg, 
+    caption: "IEEE Student Branch Webmaster" 
+  },
+  { 
+    src: wayaxtremeImg, 
+    caption: "Organizing WayaXtreme 1.0" 
+  },
+  { 
+    src: xtremeAmbassadorImg, 
+    caption: "IEEEXtreme Ambassador" 
+  },
+  { 
+    src: stemupImg, 
+    caption: "STEMUP Educational Session" 
+  },
+  { 
+    src: stemup1Img, 
+    caption: "Mentoring Students at STEMUP" 
+  },
+  { 
+    src: mlsaImg, 
+    caption: "Microsoft Student Ambassador Event" 
+  },
+  { 
+    src: sedsExcomImg, 
+    caption: "SEDS Executive Committee" 
+  },
+  { 
+    src: techxImg, 
+    caption: "TechX Session" 
+  },
+  { 
+    src: maySedsImg, 
+    caption: "SEDS May Gathering" 
+  },
 ];
 
 const skills = [
@@ -237,7 +273,6 @@ const testimonials = [
 // 2. COMPONENTS SECTION
 // ==========================================
 
-// Shared Page Header
 const PageHeader = ({ title, subtitle }) => (
   <div className="mb-10 opacity-0 animate-fade-in-up">
     <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">{title}</h1>
@@ -245,7 +280,6 @@ const PageHeader = ({ title, subtitle }) => (
   </div>
 );
 
-// Scrolling Tech Stack
 const TechStackMarquee = () => {
   const duplicatedSkills = [...skills, ...skills];
   return (
@@ -262,11 +296,10 @@ const TechStackMarquee = () => {
   );
 };
 
-// Bottom Navigation (Mobile/Footer style)
 const BottomNav = () => {
   const navItems = [
     { path: '/', label: 'About', icon: <Users size={20} /> },
-    { path: '/research', label: 'Research', icon: <BookOpen size={20} /> },
+    { path: '/projects', label: 'Projects', icon: <BookOpen size={20} /> },
     { path: '/experience', label: 'Experience', icon: <Briefcase size={20} /> },
     { path: '/community', label: 'Volunteering', icon: <Globe size={20} /> },
     { path: '/gallery', label: 'Gallery', icon: <ImageIcon size={20} /> },
@@ -305,7 +338,6 @@ const BottomNav = () => {
   );
 };
 
-// GitHub Statistics
 const GitHubStats = () => {
   const isDark = document.documentElement.classList.contains('dark');
   const theme = isDark ? 'radical' : 'default'; 
@@ -330,7 +362,6 @@ const GitHubStats = () => {
   );
 };
 
-// Testimonials
 const Testimonials = () => (
   <div className="opacity-0 animate-fade-in-up animate-stagger-3 mt-12">
     <div className="flex items-center gap-3 mb-8 px-2">
@@ -372,7 +403,7 @@ const Home = () => (
         <span className="text-blue-600 dark:text-blue-500">Ayubowan!</span> I'm Kavindu.
       </h1>
       <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-8 font-light">
-  A <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
+  I am a <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
   <strong className="font-semibold text-slate-900 dark:text-white"> Researcher</strong> driven by curiosity, code, and a passion for innovation. 
 Using Full-stack Engineering and AI/ML expertise to craft solutions that address real-world challenges.  <br/>I strongly believe that a taker mindset should transform into a giver mindset through meaningful community service, contributing back to the society that shapes us.
 </p>
@@ -465,6 +496,16 @@ Using Full-stack Engineering and AI/ML expertise to craft solutions that address
                   </div>
                   <p className="text-slate-700 dark:text-slate-300 text-base leading-relaxed group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
                     {item.text}
+                    {item.link && (
+                      <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="inline-flex items-center ml-2 text-blue-600 hover:underline text-sm"
+                      >
+                         <ExternalLink size={12} className="mr-1" /> View
+                      </a>
+                    )}
                   </p>
                 </div>
               </div>
@@ -475,10 +516,10 @@ Using Full-stack Engineering and AI/ML expertise to craft solutions that address
   </div>
 );
 
-const Research = () => {
+const Projects = () => {
   return (
     <div>
-      <PageHeader title="Research & Projects" subtitle="Investigating the intersection of IoT, Geospatial Data, and Generative AI." />
+      <PageHeader title="Projects" subtitle="Investigating the intersection of IoT, Geospatial Data, and Generative AI." />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {researchProjects.map((project, index) => (
           <div key={index} className={`opacity-0 animate-fade-in-up animate-stagger-${index % 3 + 1} group bg-white dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover-scale flex flex-col h-full hover:border-blue-200 dark:hover:border-blue-900 transition-colors`}>
@@ -673,21 +714,106 @@ const Community = () => {
   );
 };
 
-const Gallery = () => (
-  <div>
-    <PageHeader title="Gallery" subtitle="Capturing moments from my journey in volunteering, technology, and leadership." />
-    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-      {galleryImages.map((img, index) => (
-        <div key={index} className={`break-inside-avoid relative group rounded-2xl overflow-hidden cursor-zoom-in opacity-0 animate-fade-in-up animate-stagger-${index % 4 + 1}`}>
-          <img src={img.src} alt={img.caption} className="w-full h-auto transition-transform duration-500 group-hover:scale-110" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-            <p className="text-white font-medium text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{img.caption}</p>
+const Gallery = () => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
+  const openLightbox = (index) => {
+    setSelectedImageIndex(index);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setSelectedImageIndex(null);
+    document.body.style.overflow = 'unset';
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setSelectedImageIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setSelectedImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedImageIndex === null) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage(e);
+      if (e.key === 'ArrowLeft') prevImage(e);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImageIndex]);
+
+  return (
+    <div>
+      <PageHeader title="Gallery" subtitle="Capturing moments from my journey in volunteering, technology, and leadership." />
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        {galleryImages.map((img, index) => (
+          <div 
+            key={index} 
+            onClick={() => openLightbox(index)}
+            className={`break-inside-avoid relative group rounded-2xl overflow-hidden cursor-zoom-in opacity-0 animate-fade-in-up animate-stagger-${index % 4 + 1}`}
+          >
+            <img src={img.src} alt={img.caption} className="w-full h-auto transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <p className="text-white font-medium text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{img.caption}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox Modal */}
+      {selectedImageIndex !== null && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+          onClick={closeLightbox}
+        >
+          <button 
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 p-2 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all"
+          >
+            <X size={24} />
+          </button>
+
+          <button 
+            onClick={prevImage}
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all hidden md:block"
+          >
+            <ChevronLeft size={32} />
+          </button>
+
+          <button 
+            onClick={nextImage}
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all hidden md:block"
+          >
+            <ChevronLeft className="rotate-180" size={32} />
+          </button>
+
+          <div 
+            className="relative max-w-5xl max-h-[85vh] w-full flex flex-col items-center" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={galleryImages[selectedImageIndex].src} 
+              alt={galleryImages[selectedImageIndex].caption} 
+              className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+            />
+            <div className="mt-4 text-center">
+              <p className="text-white text-lg font-medium">{galleryImages[selectedImageIndex].caption}</p>
+              <p className="text-white/50 text-sm mt-1">
+                {selectedImageIndex + 1} / {galleryImages.length}
+              </p>
+            </div>
           </div>
         </div>
-      ))}
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 const Contact = () => (
   <div className="space-y-12 opacity-0 animate-fade-in-up">
@@ -790,7 +916,7 @@ const MobileNavbar = ({ darkMode, setDarkMode }) => {
 
   const navItems = [
     { path: '/', label: 'About' },
-    { path: '/research', label: 'Research' },
+    { path: '/projects', label: 'Projects' },
     { path: '/experience', label: 'Experience' },
     { path: '/community', label: 'Volunteering' },
     { path: '/gallery', label: 'Gallery' },
@@ -847,7 +973,7 @@ const DesktopNavbar = ({ darkMode, setDarkMode }) => {
   const location = useLocation();
   const navItems = [
     { path: '/', label: 'About' },
-    { path: '/research', label: 'Research' },
+    { path: '/projects', label: 'Projects' },
     { path: '/experience', label: 'Experience' },
     { path: '/community', label: 'Volunteering' },
     { path: '/gallery', label: 'Gallery' },
@@ -972,8 +1098,8 @@ const Layout = ({ children }) => {
              {/* <BottomNav /> */}
 
              {/* Footer */}
-             <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-100">
-              <p className="text-xs text-slate-400 dark:text-slate-600 ">
+             <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-60">
+              <p className="text-xs text-slate-400 dark:text-slate-600">
                 © {new Date().getFullYear()} Kavindu Ranasinghe.
               </p>
             </footer>
@@ -992,7 +1118,7 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/research" element={<Research />} />
+          <Route path="/projects" element={<Projects />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/community" element={<Community />} />
           <Route path="/gallery" element={<Gallery />} />
