@@ -24,6 +24,10 @@ import techxImg from './assets/gallery/techx.jpg';
 import wayaxtremeImg from './assets/gallery/wayaxtreme1_0.jpg';
 import xtremeAmbassadorImg from './assets/gallery/xtremeambassador.jpg';
 
+
+import wasana from './assets/endorsements/wasana.png';
+import muniba from './assets/endorsements/muniba.png';
+
 // ==========================================
 // 1. DATA SECTION
 // ==========================================
@@ -252,20 +256,23 @@ const testimonials = [
   {
     text: "I am pleased to highly recommend Kavindu for his exceptional contribution as the Section Lead for IEEEXtreme 19.0. His dedication, leadership, and the meaningful initiatives he introduced greatly contributed to strengthening participation and engagement.",
     name: "Muhammad Saood Choudhary",
-    role: "Data Scientist @ Interloop Limited",
+    role: "Region 10 Lead IEEEXtreme 19.0",
     initial: "M"
   },
   {
     text: "Kavindu delivered exceptional results. He managed his volunteers with clarity, kept the section consistently engaged, and handled every responsibility with professionalism. His leadership directly contributed to the section’s strong performance.",
     name: "Muniba Faheem",
-    role: "Computer Scientist",
-    initial: "M"
+    role: "Region 10 Co-Lead IEEEXtreme 19.0",
+    initial: "M",
+    image: muniba
   },
   {
     text: "As the Chair of EMBS Axon 2025, I had the pleasure of working with Kavindu. He played a dual role, supporting the organizing committee and stepping up as a moderator, handling the responsibility with confidence and professionalism.",
     name: "Wasana Samarasinghe",
     role: "Chair, EMBS Axon 2025",
-    initial: "W"
+    initial: "W",
+    image: wasana
+
   }
 ];
 
@@ -379,7 +386,7 @@ const Testimonials = () => (
           <p className="text-slate-700 dark:text-slate-300 italic mb-6 leading-relaxed flex-grow">"{test.text}"</p>
           <div className="flex items-center gap-4 mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center font-bold text-slate-600 dark:text-slate-300 text-lg shadow-inner">
-              {test.initial}
+              {test.image ? (<img src={test.image} alt={test.name} className="w-full h-full object-cover rounded-full" />) : (test.initial)}
             </div>
             <div>
               <div className="text-sm font-bold text-slate-900 dark:text-white">{test.name}</div>
