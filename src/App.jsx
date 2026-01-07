@@ -27,6 +27,7 @@ import xtremeAmbassadorImg from './assets/gallery/xtremeambassador.jpg';
 
 import wasana from './assets/endorsements/wasana.png';
 import muniba from './assets/endorsements/muniba.png';
+import saood from './assets/endorsements/saood.png';
 
 // ==========================================
 // 1. DATA SECTION
@@ -257,7 +258,8 @@ const testimonials = [
     text: "I am pleased to highly recommend Kavindu for his exceptional contribution as the Section Lead for IEEEXtreme 19.0. His dedication, leadership, and the meaningful initiatives he introduced greatly contributed to strengthening participation and engagement.",
     name: "Muhammad Saood Choudhary",
     role: "Region 10 Lead IEEEXtreme 19.0",
-    initial: "M"
+    initial: "S",
+    image: saood
   },
   {
     text: "Kavindu delivered exceptional results. He managed his volunteers with clarity, kept the section consistently engaged, and handled every responsibility with professionalism. His leadership directly contributed to the section’s strong performance.",
