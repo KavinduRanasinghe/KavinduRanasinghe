@@ -65,7 +65,7 @@ const education = [
     degree: "BSc Applied Sciences",
     school: "Wayamba University of Sri Lanka",
     period: "2022 - 2025",
-    desc: "Focused on Mathematics, Statistics, Computing, and Management Information Systems."
+    desc: "Completed with a Second Lower Class Division , Focused on Mathematics, Statistics, Computing, and Management Information Systems."
   },
   {
     degree: "Secondary Education",
@@ -179,9 +179,9 @@ const researchProjects = [
 ];
 
 const community = [
-  { role: "Section Lead (IEEEXtreme 19.0)", org: "IEEE Sri Lanka Section", period: "Jun 2025 - Present", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://placehold.co/200x200/00629B/ffffff?text=Xtreme", desc: "Leading the national strategy for IEEEXtreme 19.0, focusing on student engagement and competition logistics across Sri Lanka." },
+  { role: "Section Lead (IEEEXtreme 19.0)", org: "IEEE Sri Lanka Section", period: "Jun 2025 - Present", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Leading the national strategy for IEEEXtreme 19.0, focusing on student engagement and competition logistics across Sri Lanka." },
   { role: "Industry Relations SubCom Member", org: "IEEE MGA SAC", period: "Present", category: "IEEE", type: "Global", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Supporting the design of the Industry Relations Platform (IRP) system at a global level." },
-  { role: "Program & Delivery Coordinator", org: "IEEE SLSAC Membership Development", period: "Feb 2025 - Present", category: "IEEE", type: "National", color: "bg-[#00629B]", logo: "https://placehold.co/200x200/00629B/ffffff?text=SLSAC", desc: "Coordinating membership development programs and ensuring effective delivery of initiatives like LeaderCon and IEEE Day." },
+  { role: "Program & Delivery Coordinator", org: "IEEE SLSAC Membership Development", period: "Feb 2025 - Present", category: "IEEE", type: "National", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Coordinating membership development programs and ensuring effective delivery of initiatives like LeaderCon and IEEE Day." },
   { role: "Founding Chairperson", org: "IEEE CS SBC WUSL", period: "Jan 2025 - Present", category: "IEEE", type: "Leadership", color: "bg-orange-500", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Established the Computer Society Chapter at Wayamba University. Spearheading technical workshops and community building." },
   { role: "Microsoft Student Ambassador", org: "Microsoft", period: "Aug 2024 - Present", category: "MLSA", type: "Global Program", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", link: "https://mvp.microsoft.com/studentambassadors/certificate/7d6f5da2-ac9c-40f9-b47a-d7658099c9d6", desc: "Promoting Azure, GitHub, and Visual Studio through events and workshops. Creating inclusive learning environments to empower students with cloud and automation skills." },
   { role: "Founding Chair", org: "Microsoft Learn Student Community (WUSL)", period: "Present", category: "MLSA", type: "Community", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Established MLSC at WUSL. Organized workshops on Azure and Power Apps to empower students with Microsoft technologies." },
@@ -194,7 +194,7 @@ const community = [
   { role: "Team Lead - DXP", org: "AIESEC in Wayamba", period: "May 2024 - Dec 2024", category: "AIESEC", type: "Leadership", color: "bg-[#037Ef3]", logo: "https://cdn.simpleicons.org/aiesec/white", desc: "Led the Digital Experience (DXP) team, driving digital engagement strategies and enhancing the online presence of AIESEC in Wayamba." },
   { role: "Ambassador (IEEEXtreme 18.0)", org: "IEEE SB WUSL", period: "Apr 2024 - Dec 2024", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Promoted the 24-hour coding competition, mentoring teams and ensuring high participation from the university." },
   { role: "Webmaster", org: "IEEE SB WUSL", period: "Jan 2024 - Dec 2024", category: "IEEE", type: "Technical", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Maintained and developed the Student Branch website, ensuring up-to-date content and a modern user interface." },
-  { role: "Chairperson - WayaXtreme 3.0", org: "IEEE SB WUSL", period: "Jun 2024 - Oct 2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://placehold.co/200x200/00629B/ffffff?text=WayaXtreme", desc: "Led the organizing committee for the university's premier hackathon, managing logistics and participant experience." },
+  { role: "Chairperson - WayaXtreme 3.0", org: "IEEE SB WUSL", period: "Jun 2024 - Oct 2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Led the organizing committee for the university's premier hackathon, managing logistics and participant experience." },
   { role: "Volunteer", org: "STEMUP Educational Foundation", period: "Nov 2023 - Aug 2024", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Conducted educational sessions on Scratch, MicroBits, Python, and Arduino, directly mentoring students and fostering technical literacy." }
 ];
 
@@ -205,6 +205,7 @@ const sessions = [
   { title: "MicroBits & IoT Basics", org: "STEMUP Educational Foundation", role: "Instructor", date: "Jan 2024", category: "Workshop", desc: "Introduced young students to IoT concepts using MicroBits." },
   { title: "Scratch Programming (Parts 1 & 2)", org: "STEMUP Educational Foundation", role: "Instructor", date: "Nov - Dec 2023", category: "Workshop", desc: "Taught block-based coding to beginners to foster early interest in computer science." }
 ];
+
 
 // --- Gallery Data ---
 const galleryImages = [
