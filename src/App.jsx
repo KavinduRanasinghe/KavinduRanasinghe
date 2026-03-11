@@ -125,6 +125,20 @@ const experience = [
 
 const researchProjects = [
   {
+    title: "MZ-GenAI - Mondelez",
+    tag: "Desktop App",
+    period: "Completed",
+    desc: "A desktop application that accesses web-hosted internal GenAI chatbot services for Mondelez. Integrated Edge WebView2 and Windows APIs to function similarly to Microsoft Copilot, providing employees quick access to internal knowledge.",
+    tech: ["C#", "WinForms", "WebView2", "Windows APIs"]
+  },
+  {
+    title: "AdvocateLK",
+    tag: "Backend",
+    period: "Completed",
+    desc: "A platform connecting legal professionals with clients in Sri Lanka. Developed a robust backend with user authentication (JWT) using clean architecture principles, and implemented comprehensive unit testing.",
+    tech: ["ASP.NET Core", "EF Core", "PostgreSQL", "xUnit"]
+  },
+  {
     title: "IoT GIS Research",
     tag: "Research",
     period: "Ongoing",
