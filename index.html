@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <!-- This sets the tab icon to your profile photo -->
-    <link rel="icon" type="image/png" href="/KavinduRanasinghe/assets/profile-DrZlUSZX.png" />
+    <link rel="icon" type="image/png" href="./assets/profile-DrZlUSZX.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- This sets the text displayed on the browser tab -->
     <title>Kavindu Ranasinghe</title>
@@ -12,13 +12,17 @@
         const redirect = sessionStorage.getItem('gh-pages-path');
         if (!redirect) return;
 
+        const knownRoutes = ['about', 'projects', 'experience', 'volunteering', 'gallery', 'contact'];
+        const [firstSegment = ''] = window.location.pathname.split('/').filter(Boolean);
+        const base = firstSegment && !knownRoutes.includes(firstSegment) ? `/${firstSegment}` : '';
+
         sessionStorage.removeItem('gh-pages-path');
         const target = redirect.startsWith('/') ? redirect : `/${redirect}`;
-        window.history.replaceState(null, '', target);
+        window.history.replaceState(null, '', `${base}${target}`);
       })();
     </script>
-    <script type="module" crossorigin src="/KavinduRanasinghe/assets/index-CAfxnigK.js"></script>
-    <link rel="stylesheet" crossorigin href="/KavinduRanasinghe/assets/index-CBr4_V78.css">
+    <script type="module" crossorigin src="./assets/index-yyrmz0_r.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CBr4_V78.css">
   </head>
   <body>
     <div id="root"></div>
