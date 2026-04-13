@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { 
-  Mail, Linkedin, Download, Github, Moon, Sun, Award, 
-  Briefcase, Star, ArrowRight, FileText, Globe, 
+  Mail, Linkedin, Github, Moon, Sun, Award, 
+  Briefcase, Star, ArrowRight, Globe, 
   MapPin, Calendar, ChevronRight, Menu, X, Rocket, Code, 
   Megaphone, Users, Layout as LayoutIcon, Mic, Radio, Eye, Terminal, ExternalLink, BookOpen, Filter,
   Cpu, Database, Server, Layers, Image as ImageIcon, Video, Presentation, Clock, GraduationCap, CheckCircle,
@@ -41,6 +41,15 @@ const profile = {
   github: "https://github.com/KavinduRanasinghe",
   image: profilePic
 };
+
+const navItems = [
+  { path: '/about', label: 'About', title: 'About' },
+  { path: '/projects', label: 'Projects', title: 'Projects' },
+  { path: '/experience', label: 'Experience', title: 'Experience' },
+  { path: '/volunteering', label: 'Volunteering', title: 'Volunteering' },
+  { path: '/gallery', label: 'Gallery', title: 'Gallery' },
+  { path: '/contact', label: 'Contact', title: 'Contact' },
+];
 
 const highlights = [
   { date: "2025", text: "Appointed Section Lead for IEEEXtreme 19.0, leading national initiatives.", type: "Leadership" },
@@ -179,23 +188,30 @@ const researchProjects = [
 ];
 
 const community = [
-  { role: "Section Lead (IEEEXtreme 19.0)", org: "IEEE Sri Lanka Section", period: "Jun 2025 - Present", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Leading the national strategy for IEEEXtreme 19.0, focusing on student engagement and competition logistics across Sri Lanka." },
-  { role: "Industry Relations SubCom Member", org: "IEEE MGA SAC", period: "Present", category: "IEEE", type: "Global", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Supporting the design of the Industry Relations Platform (IRP) system at a global level." },
-  { role: "Program & Delivery Coordinator", org: "IEEE SLSAC Membership Development", period: "Feb 2025 - Present", category: "IEEE", type: "National", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Coordinating membership development programs and ensuring effective delivery of initiatives like LeaderCon and IEEE Day." },
-  { role: "Founding Chairperson", org: "IEEE CS SBC WUSL", period: "Jan 2025 - Present", category: "IEEE", type: "Leadership", color: "bg-orange-500", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Established the Computer Society Chapter at Wayamba University. Spearheading technical workshops and community building." },
-  { role: "Microsoft Student Ambassador", org: "Microsoft", period: "Aug 2024 - Present", category: "MLSA", type: "Global Program", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", link: "https://mvp.microsoft.com/studentambassadors/certificate/7d6f5da2-ac9c-40f9-b47a-d7658099c9d6", desc: "Promoting Azure, GitHub, and Visual Studio through events and workshops. Creating inclusive learning environments to empower students with cloud and automation skills." },
-  { role: "Founding Chair", org: "Microsoft Learn Student Community (WUSL)", period: "Present", category: "MLSA", type: "Community", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Established MLSC at WUSL. Organized workshops on Azure and Power Apps to empower students with Microsoft technologies." },
-  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Nov 2023 - Present", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Leading STEM education initiatives and delivering a structured curriculum covering Scratch, MicroBits, Python, and Arduino to empower students with coding and electronics skills." },
-  { role: "Webmaster", org: "SEDS Wayamba", period: "2024 - Present", category: "SEDS", type: "Space Tech", color: "bg-black", icon: <Rocket size={24} />, desc: "Managing the SEDS Wayamba website and aligning content with the organization's goals for space exploration projects." },
-  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Aug 2024 - Aug 2025", category: "STEMUP", type: "Leadership", color: "bg-emerald-600", icon: <Users size={24} />, desc: "Led the regional community, coordinating volunteers and overseeing the delivery of STEM education programs across the province." },
-  { role: "Public Visibility Team Member", org: "IEEE EMBS AXON 2025", period: "Mar 2025 - May 2025", category: "IEEE", type: "Volunteer", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Managing public relations and visibility strategies for the AXON 2025 event under the Engineering in Medicine and Biology Society." },
-  { role: "Program Team Member", org: "IEEE Let'sTalk Adhoc Committee", period: "Dec 2024 - May 2025", category: "IEEE", type: "Program", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Curating content and managing sessions for the Let'sTalk series, focusing on professional development for students." },
-  { role: "Chairperson - Career Compass", org: "IEEE SB WUSL", period: "Dec 2024 - Feb 2025", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Directed the 'Career Compass' session at the Student Leadership Institute (SLI), bridging the gap between academia and industry." },
-  { role: "Team Lead - DXP", org: "AIESEC in Wayamba", period: "May 2024 - Dec 2024", category: "AIESEC", type: "Leadership", color: "bg-[#037Ef3]", logo: "https://cdn.simpleicons.org/aiesec/white", desc: "Led the Digital Experience (DXP) team, driving digital engagement strategies and enhancing the online presence of AIESEC in Wayamba." },
-  { role: "Ambassador (IEEEXtreme 18.0)", org: "IEEE SB WUSL", period: "Apr 2024 - Dec 2024", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Promoted the 24-hour coding competition, mentoring teams and ensuring high participation from the university." },
-  { role: "Webmaster", org: "IEEE SB WUSL", period: "Jan 2024 - Dec 2024", category: "IEEE", type: "Technical", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Maintained and developed the Student Branch website, ensuring up-to-date content and a modern user interface." },
-  { role: "Chairperson - WayaXtreme 3.0", org: "IEEE SB WUSL", period: "Jun 2024 - Oct 2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Led the organizing committee for the university's premier hackathon, managing logistics and participant experience." },
-  { role: "Volunteer", org: "STEMUP Educational Foundation", period: "Nov 2023 - Aug 2024", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Conducted educational sessions on Scratch, MicroBits, Python, and Arduino, directly mentoring students and fostering technical literacy." }
+  { role: "Technical Activities Vice Chair", org: "IEEE Sri Lanka Student Activities Committee", period: "2026", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Serving as Technical Activities Vice Chair and supporting the organization of TechFest Sri Lanka 2026." },
+  { role: "TechX Outreach Lead", org: "IEEE CS SYP", period: "2026", category: "IEEE", type: "Outreach", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Serving as Outreach Lead for IEEE CS SYP TechX, supporting visibility, community engagement, and outreach efforts around the program." },
+  { role: "Section Lead (IEEEXtreme 19.0)", org: "IEEE Sri Lanka Section", period: "2025", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Led the national IEEEXtreme 19.0 effort, launched XtremeDiaries, collaborated with 23 universities, supported the full ambassador network, and helped Sri Lanka reach the 3rd highest participant count globally with 42% student-member participation." },
+  { role: "Industry Relations SubCom Member", org: "IEEE MGA SAC", period: "2025", category: "IEEE", type: "Global", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Contributed to the design of the Industry Relations Platform (IRP), identified stakeholder-aligned use cases, and supported research and documentation for data-informed system planning." },
+  { role: "Membership Development SLSAC Coordinator", org: "IEEE Sri Lanka Section", period: "2025", category: "IEEE", type: "National", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Planned and strategized membership development initiatives while supporting IEEE Day, LeaderCon 2025, and the planning and execution of SLYWC 2025." },
+  { role: "Content Manager", org: "EMBS SL Section Chapter PV Sub Committee", period: "2025", category: "IEEE", type: "Content", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Updated marketing trackers, introduced fresh initiatives, sourced content for writers and designers, and supported cross-platform social media management across Facebook, Instagram, LinkedIn, and WhatsApp channels." },
+  { role: "PV Committee Member & Moderator", org: "IEEE EMBS AXON", period: "2025", category: "IEEE", type: "Volunteer", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Volunteered with the public visibility team, moderated sessions, and supported the volunteer team throughout event delivery." },
+  { role: "Founding Chair", org: "IEEE CS SBC WUSL", period: "2025", category: "IEEE", type: "Leadership", color: "bg-orange-500", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Played a key role in establishing the IEEE Computer Society Chapter at Wayamba University, organizing technical events and coordinating with IEEE leaders for smooth integration into the student branch structure." },
+  { role: "Education Week Ambassador", org: "IEEE Sri Lanka", period: "May 2025", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Supported IEEE Education Week activities in Sri Lanka and promoted the educational value and member benefits of IEEE to local communities." },
+  { role: "Program Team Member", org: "YPSL Let'sTalk Adhoc", period: "2024", category: "IEEE", type: "Program", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Contributed to planning and execution of the YPSL Let’sTalk volunteer training series focused on personal development." },
+  { role: "SLI Event Coordinator", org: "YPSL", period: "2024", category: "IEEE", type: "Coordinator", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Coordinated the Sri Lanka IEEE Young Professionals SLI event with the student branch and helped ensure smooth planning and delivery." },
+  { role: "IEEEXtreme Awareness Session Event Chair", org: "IEEE Sri Lanka", period: "2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Organized the first IEEEXtreme awareness session in Sri Lanka hosted by global program leads, coordinating logistics, outreach, and community engagement to drive participation." },
+  { role: "IEEEXtreme 18.0 Student Branch Ambassador", org: "IEEE SB WUSL", period: "2024", category: "IEEE", type: "Ambassador", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Acted as the main liaison between the global IEEEXtreme program and IEEE SB WUSL, promoted the competition, organized awareness sessions, and supported coordination among teams and mentors." },
+  { role: "Webmaster", org: "IEEE SB WUSL", period: "2024", category: "IEEE", type: "Technical", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Managed the official IEEE SB WUSL online presence and maintained timely updates for events, announcements, digital content, and promotional material." },
+  { role: "WayaXtreme 3.0 Event Chair", org: "IEEE SB WUSL", period: "2024", category: "IEEE", type: "Event Chair", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Led the organizing committee for WayaXtreme 3.0, managing logistics, marketing, registration, participant engagement, and sponsor coordination." },
+  { role: "CodeRally 4.0 Editorial Team Member", org: "IEEE Computer Society Chapter at IIT", period: "2023", category: "IEEE", type: "Editorial", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Supported editorial work for CodeRally 4.0 and contributed to organizing the competition and its event content." },
+  { role: "Microsoft Student Ambassador", org: "Microsoft", period: "Aug 2024 - Present", category: "MLSA", type: "Global Program", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", link: "https://mvp.microsoft.com/studentambassadors/certificate/7d6f5da2-ac9c-40f9-b47a-d7658099c9d6", desc: "Promoting Azure, GitHub, and Visual Studio through events and workshops while creating inclusive learning opportunities around Microsoft technologies." },
+  { role: "Founding Chair", org: "Microsoft Learn Student Community (WUSL)", period: "Present", category: "MLSA", type: "Community", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Established the Microsoft Learn Student Community at WUSL, led student activities around Azure and Power Apps, and collaborated with industry experts to create valuable learning opportunities." },
+  { role: "Content Planning Team Member", org: "MLSA Events", period: "2024", category: "MLSA", type: "Content", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Helped create and organize content for MLSA-related sessions and workshops, including promotional assets, slide decks, and tutorials." },
+  { role: "Taprobane V4 R&D Team Member", org: "Taprobane V4", period: "2024", category: "MLSA", type: "Research", color: "bg-[#0078D4]", logo: "https://cdn.simpleicons.org/microsoft/white", desc: "Volunteered on interdisciplinary R&D work focused on innovation and building practical technology solutions for real-world challenges." },
+  { role: "Webmaster", org: "SEDS Wayamba", period: "2024 - Present", category: "SEDS", type: "Space Tech", color: "bg-black", icon: <Rocket size={24} />, desc: "Managed the SEDS Wayamba website, keeping content current and aligned with the organization’s space-focused projects and events." },
+  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Nov 2023 - Present", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Leading STEM education initiatives and delivering structured learning in Scratch, MicroBits, Python, and Arduino for school students." },
+  { role: "Community Lead (North Western Province)", org: "STEMUP Educational Foundation", period: "Aug 2024 - Aug 2025", category: "STEMUP", type: "Leadership", color: "bg-emerald-600", icon: <Users size={24} />, desc: "Led the regional volunteer community, coordinated program delivery, and supported STEM education outreach across the province." },
+  { role: "Volunteer", org: "STEMUP Educational Foundation", period: "Nov 2023 - Aug 2024", category: "STEMUP", type: "Education", color: "bg-emerald-600", icon: <BookOpen size={24} />, desc: "Conducted student-facing educational sessions and directly mentored learners in coding, electronics, and maker-oriented activities." }
 ];
 
 const sessions = [
@@ -293,14 +309,24 @@ const testimonials = [
   }
 ];
 
+const heroMetrics = [
+  { value: '4+', label: 'Years building software', icon: <Code size={18} /> },
+  { value: '15+', label: 'Community leadership roles', icon: <Users size={18} /> },
+  { value: '7', label: 'Featured projects', icon: <Layers size={18} /> },
+  { value: '5+', label: 'Workshops delivered', icon: <Mic size={18} /> },
+];
+
 // ==========================================
 // 2. COMPONENTS SECTION
 // ==========================================
 
 const PageHeader = ({ title, subtitle }) => (
-  <div className="mb-10 opacity-0 animate-fade-in-up">
-    <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">{title}</h1>
-    {subtitle && <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">{subtitle}</p>}
+  <div className="mb-10 rounded-[2rem] border border-white/60 bg-white/75 p-7 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.35)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/65 opacity-0 animate-fade-in-up">
+    <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.28em] text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300">
+      Portfolio Section
+    </div>
+    <h1 className="max-w-3xl text-3xl font-bold tracking-tight text-slate-950 dark:text-white md:text-4xl">{title}</h1>
+    {subtitle && <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg">{subtitle}</p>}
   </div>
 );
 
@@ -422,17 +448,74 @@ const Testimonials = () => (
 
 const Home = () => (
   <div className="space-y-16">
-    <div className="opacity-0 animate-fade-in-up bg-white/50 dark:bg-[#0a0a0a]/50 backdrop-blur-sm rounded-[2rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-sm hover-scale">
-      <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
-        <span className="text-blue-600 dark:text-blue-500">Ayubowan!</span> I'm Kavindu.
-      </h1>
-      <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-8 font-light">
-  I am a <strong className="font-semibold text-slate-900 dark:text-white">Software Engineer</strong> and
-  <strong className="font-semibold text-slate-900 dark:text-white"> Researcher</strong> driven by curiosity, code, and a passion for innovation. 
-Using Full-stack Engineering and AI/ML expertise to craft solutions that address real-world challenges.  <br/>I strongly believe that a taker mindset should transform into a giver mindset through meaningful community service, contributing back to the society that shapes us.
-</p>
+    <section className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_80px_-40px_rgba(14,116,144,0.55)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70 md:p-10 opacity-0 animate-fade-in-up">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-16 right-0 h-48 w-48 rounded-full bg-cyan-300/30 blur-3xl dark:bg-cyan-500/15"></div>
+        <div className="absolute bottom-0 left-0 h-56 w-56 rounded-full bg-amber-200/40 blur-3xl dark:bg-amber-400/10"></div>
+      </div>
+      <div className="relative grid gap-8 lg:grid-cols-[1.6fr_0.9fr] lg:items-end">
+        <div>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.28em] text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+            Engineer • Researcher • Community Builder
+          </div>
+          <h1 className="max-w-4xl text-4xl font-bold leading-[1.05] tracking-tight text-slate-950 dark:text-white md:text-6xl">
+            Building practical software, AI-driven products, and communities that keep growing after launch.
+          </h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 md:text-xl">
+            Ayubowan! I'm Kavindu. I work across full-stack engineering, enterprise software, and applied AI while investing deeply in student communities, workshops, and leadership programs that create real momentum for others.
+          </p>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
+            My approach is simple: ship useful systems, stay curious, and turn personal growth into shared opportunity through research, mentorship, and service.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <NavLink to="/projects" className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200">
+              Explore Projects <ArrowRight size={16} />
+            </NavLink>
+            <NavLink to="/contact" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/70 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:border-slate-400 hover:text-slate-950 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:text-white">
+              Start a Conversation <Send size={16} />
+            </NavLink>
+          </div>
+        </div>
 
-    </div>
+        <div className="rounded-[1.75rem] border border-slate-200/80 bg-slate-950 p-6 text-white shadow-2xl shadow-cyan-950/20 dark:border-white/10 dark:bg-white/5">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-cyan-200/70">Current Focus</p>
+              <h2 className="mt-2 text-2xl font-bold">Applied engineering with visible impact</h2>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-cyan-200">
+              <Terminal size={22} />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Now</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-200">Building enterprise applications at HCLTech and researching real-time IoT streams for GIS-driven intelligence.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Edge</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-200">Strong overlap between software delivery, AI experimentation, and leadership in technical communities.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-400/20 to-amber-300/10 p-4">
+              <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/70">Principle</p>
+              <p className="mt-2 text-sm font-medium leading-relaxed text-white">Use technology to solve immediate problems and community work to multiply the long-term effect.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className="grid grid-cols-2 gap-4 md:grid-cols-4 opacity-0 animate-fade-in-up animate-stagger-1">
+      {heroMetrics.map((item) => (
+        <div key={item.label} className="rounded-[1.5rem] border border-white/70 bg-white/75 p-5 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/60">
+          <div className="mb-4 inline-flex rounded-2xl bg-slate-100 p-3 text-sky-600 dark:bg-white/5 dark:text-sky-300">
+            {item.icon}
+          </div>
+          <div className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white">{item.value}</div>
+          <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{item.label}</p>
+        </div>
+      ))}
+    </section>
 
     {/* Education & Certifications Section */}
     <div className="opacity-0 animate-fade-in-up animate-stagger-1 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -546,7 +629,7 @@ const Projects = () => {
       <PageHeader title="Projects" subtitle="Investigating the intersection of IoT, Geospatial Data, and Generative AI." />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {researchProjects.map((project, index) => (
-          <div key={index} className={`opacity-0 animate-fade-in-up animate-stagger-${index % 3 + 1} group bg-white dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover-scale flex flex-col h-full hover:border-blue-200 dark:hover:border-blue-900 transition-colors`}>
+          <div key={index} className={`opacity-0 animate-fade-in-up animate-stagger-${index % 3 + 1} group overflow-hidden rounded-[1.75rem] border border-white/70 bg-white/80 p-6 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl hover-scale dark:border-white/10 dark:bg-slate-950/60 flex flex-col h-full transition-all hover:border-cyan-200 dark:hover:border-cyan-800/50`}>
             <div className="flex justify-between items-start mb-4">
               <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${
                 project.tag === 'Research' 
@@ -561,7 +644,7 @@ const Projects = () => {
                 </a>
               )}
             </div>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3 group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors">
               {project.title}
             </h3>
             <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed flex-grow">
@@ -569,6 +652,9 @@ const Projects = () => {
             </p>
 
             <div className="mt-auto space-y-4">
+              <div className="rounded-2xl bg-slate-50/90 px-4 py-3 text-xs font-medium uppercase tracking-[0.24em] text-slate-500 dark:bg-white/5 dark:text-slate-400">
+                {project.period}
+              </div>
               <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
                 {project.tech.map((t, i) => (
                   <span key={i} className="text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700">
@@ -613,7 +699,7 @@ const Experience = () => (
              </span>
           </div>
           
-          <p className="text-slate-600 dark:text-slate-400 leading-relaxed bg-white dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-blue-200 dark:hover:border-blue-800 transition-colors">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed border border-white/70 bg-white/80 p-6 rounded-[1.6rem] shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/60 hover:border-cyan-200 dark:hover:border-cyan-800 transition-colors">
             {job.desc}
           </p>
         </div>
@@ -625,6 +711,14 @@ const Experience = () => (
 const Community = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const filters = ['All', 'IEEE', 'MLSA', 'SEDS', 'STEMUP', 'AIESEC'];
+  const filterAccent = {
+    All: 'from-slate-900 to-slate-700 dark:from-white dark:to-slate-200',
+    IEEE: 'from-[#00629B] to-sky-500',
+    MLSA: 'from-[#0078D4] to-cyan-500',
+    SEDS: 'from-slate-900 to-slate-700',
+    STEMUP: 'from-emerald-600 to-lime-500',
+    AIESEC: 'from-[#037Ef3] to-sky-400',
+  };
 
   const filteredCommunity = activeFilter === 'All' 
     ? community 
@@ -634,59 +728,90 @@ const Community = () => {
     <div>
       <PageHeader title="Volunteer Section" subtitle="Roles undertaken willingly, without pay, to give back to the community." />
       
-      <div className="flex flex-wrap gap-2 mb-10 opacity-0 animate-fade-in-up">
+      <div className="mb-10 rounded-[1.8rem] border border-white/70 bg-white/75 p-4 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.35)] backdrop-blur-xl opacity-0 animate-fade-in-up dark:border-white/10 dark:bg-slate-950/60">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Browse Roles</p>
+            <h3 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">Volunteer history across communities and programs</h3>
+          </div>
+          <div className="inline-flex items-center self-start rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600 dark:border-slate-800 dark:bg-white/5 dark:text-slate-300">
+            {filteredCommunity.length} roles
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
         {filters.map(filter => (
           <button
             key={filter}
             onClick={() => setActiveFilter(filter)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
               activeFilter === filter 
-                ? 'bg-slate-900 dark:bg-white text-white dark:text-black shadow-lg shadow-slate-200 dark:shadow-none scale-105' 
-                : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                ? `bg-gradient-to-r ${filterAccent[filter]} text-white dark:text-slate-950 shadow-lg shadow-slate-200 dark:shadow-none scale-[1.02] border-transparent`
+                : 'bg-white/90 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
             }`}
           >
             {filter}
           </button>
         ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-16">
         {filteredCommunity.length > 0 ? (
           filteredCommunity.map((item, index) => (
-            <div key={index} className={`opacity-0 animate-fade-in-up bg-white dark:bg-slate-900/30 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-lg transition-all hover:translate-x-1 flex flex-col md:flex-row gap-6 items-start`} style={{ animationDelay: `${index * 50}ms` }}>
-              <div className={`shrink-0 w-14 h-14 flex items-center justify-center rounded-xl ${item.color} text-white shadow-lg overflow-hidden`}>
+            <article key={index} className="group opacity-0 animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
+              <div className="rounded-[1.85rem] border border-white/70 bg-white/80 p-6 shadow-[0_26px_70px_-42px_rgba(15,23,42,0.45)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_30px_90px_-44px_rgba(8,145,178,0.35)] dark:border-white/10 dark:bg-slate-950/60 dark:hover:border-cyan-800/50 md:p-7">
+              <div className="flex flex-col gap-5 md:grid md:grid-cols-[84px_minmax(0,1fr)] md:items-start">
+              <div className="flex items-start justify-between gap-4 md:block">
+              <div className={`shrink-0 h-16 w-16 flex items-center justify-center rounded-2xl ${item.color} text-white shadow-lg overflow-hidden ring-1 ring-black/5 dark:ring-white/10`}>
                   {item.logo ? (
                     <img src={item.logo} alt={item.org} className="w-10 h-10 object-contain" />
                   ) : (
                     item.icon
                   )}
               </div>
-              <div>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                  <h4 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <div className="flex flex-wrap gap-2 md:mt-4">
+                <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500 dark:border-slate-800 dark:bg-white/5 dark:text-slate-400">
+                  {item.category}
+                </span>
+                <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500 dark:border-slate-800 dark:bg-white/5 dark:text-slate-400">
+                  {item.type}
+                </span>
+              </div>
+              </div>
+
+              <div className="min-w-0">
+                <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                  <h4 className="max-w-3xl text-xl font-bold leading-tight text-slate-900 transition-colors group-hover:text-cyan-700 dark:text-white dark:group-hover:text-cyan-300 flex items-center gap-2">
                     {item.role}
                     {item.link && (
-                      <a href={item.link} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="View Certificate">
+                      <a href={item.link} target="_blank" rel="noreferrer" className="shrink-0 text-slate-400 transition-colors hover:text-cyan-600 dark:hover:text-cyan-400" title="View Certificate">
                         <ExternalLink size={16} />
                       </a>
                     )}
                   </h4>
-                  <span className="inline-flex items-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded mt-1 sm:mt-0">
+                  <span className="inline-flex items-center self-start text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-[0.24em] bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-full mt-1 xl:mt-0 whitespace-nowrap">
                     {item.period}
                   </span>
                 </div>
-                
-                <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-                  {item.org}
-                  <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600"></span>
-                  <span className="text-slate-400 dark:text-slate-500 font-semibold">{item.type}</span>
-                </p>
-                
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+
+                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+                  <p className="text-sm font-bold tracking-wide text-blue-600 dark:text-blue-400">
+                    {item.org}
+                  </p>
+                  <span className="hidden h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600 sm:block"></span>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
+                    {item.category} Role
+                  </p>
+                </div>
+
+                <p className="max-w-4xl text-[15px] leading-7 text-slate-600 dark:text-slate-400">
                   {item.desc}
                 </p>
               </div>
-            </div>
+              </div>
+              </div>
+            </article>
           ))
         ) : (
           <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/20 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 opacity-0 animate-fade-in-up">
@@ -934,24 +1059,37 @@ const Contact = () => (
 // 3. LAYOUT & MAIN APP
 // ==========================================
 
-const MobileNavbar = ({ darkMode, setDarkMode }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const routeElements = {
+  '/about': <Home />,
+  '/projects': <Projects />,
+  '/experience': <Experience />,
+  '/volunteering': <Community />,
+  '/gallery': <Gallery />,
+  '/contact': <Contact />,
+};
+
+const ScrollToTop = () => {
   const location = useLocation();
 
-  const navItems = [
-    { path: '/', label: 'About' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/experience', label: 'Experience' },
-    { path: '/community', label: 'Volunteering' },
-    { path: '/gallery', label: 'Gallery' },
-    { path: '/contact', label: 'Contact' },
-  ];
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const currentRoute = navItems.find((item) => item.path === location.pathname);
+    document.title = currentRoute
+      ? `${currentRoute.title} | ${profile.name}`
+      : `${profile.name} | Portfolio`;
+  }, [location.pathname]);
+
+  return null;
+};
+
+const MobileNavbar = ({ darkMode, setDarkMode }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="lg:hidden sticky top-0 z-40 mb-8">
-      <div className="mx-4 mt-4 bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-lg border border-slate-200 dark:border-slate-800 rounded-2xl shadow-lg px-4 py-3 flex items-center justify-between">
+      <div className="mx-4 mt-4 rounded-[1.6rem] border border-white/70 bg-white/80 px-4 py-3 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75 flex items-center justify-between">
          <div className="font-bold text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-            <span className="w-8 h-8 flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-black rounded-lg text-sm animate-pulse">KR</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-emerald-400 text-sm text-white shadow-lg shadow-cyan-500/30">KR</span>
             <span className="hidden sm:inline">Kavindu.</span>
          </div>
          
@@ -968,7 +1106,7 @@ const MobileNavbar = ({ darkMode, setDarkMode }) => {
       {/* Mobile Menu Dropdown */}
       {isOpen && (
         <div className="absolute top-full left-0 right-0 p-4 animate-fade-in-up">
-           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-2 space-y-1">
+           <div className="rounded-[1.6rem] border border-white/70 bg-white/85 p-2 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/85 space-y-1">
               {navItems.map((item) => (
                 <NavLink 
                   key={item.path}
@@ -994,18 +1132,11 @@ const MobileNavbar = ({ darkMode, setDarkMode }) => {
 };
 
 const DesktopNavbar = ({ darkMode, setDarkMode }) => {
-  const location = useLocation();
-  const navItems = [
-    { path: '/', label: 'About' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/experience', label: 'Experience' },
-    { path: '/community', label: 'Volunteering' },
-    { path: '/gallery', label: 'Gallery' },
-    { path: '/contact', label: 'Contact' },
-  ];
-
   return (
-    <div className="hidden lg:flex fixed top-6 left-1/2 -translate-x-1/2 z-50 items-center gap-1 p-2 rounded-full bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-xl">
+    <div className="hidden lg:flex fixed top-6 left-1/2 -translate-x-1/2 z-50 items-center gap-1 p-2 rounded-full border border-white/70 bg-white/80 shadow-[0_28px_80px_-42px_rgba(15,23,42,0.55)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75">
+      <div className="ml-1 mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-emerald-400 text-xs font-bold text-white shadow-lg shadow-cyan-500/30">
+        KR
+      </div>
       <div className="flex items-center gap-1 px-2">
          {navItems.map((item) => (
             <NavLink 
@@ -1035,21 +1166,25 @@ const DesktopNavbar = ({ darkMode, setDarkMode }) => {
 };
 
 const Layout = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(false);
-  const location = useLocation();
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('portfolio-theme') === 'dark';
+  });
 
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
+    window.localStorage.setItem('portfolio-theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
   return (
-    <div className={`min-h-screen bg-slate-50 dark:bg-[#050505] transition-colors duration-300 font-sans selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100 ${darkMode ? 'dark' : ''}`}>
+    <div className={`min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(103,232,249,0.14),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(253,224,71,0.16),_transparent_24%),linear-gradient(180deg,_#f8fafc_0%,_#eef6ff_45%,_#f8fafc_100%)] transition-colors duration-300 font-sans selection:bg-blue-100 selection:text-blue-900 dark:bg-[radial-gradient(circle_at_top_left,_rgba(6,182,212,0.15),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(245,158,11,0.08),_transparent_18%),linear-gradient(180deg,_#020617_0%,_#020617_35%,_#020617_100%)] dark:selection:bg-blue-900 dark:selection:text-blue-100 ${darkMode ? 'dark' : ''}`}>
       
       {/* Background Grid Pattern */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-400 opacity-20 blur-[100px] dark:bg-blue-900 dark:opacity-20 animate-pulse" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.14)_1px,transparent_1px)] bg-[size:30px_30px] dark:bg-[linear-gradient(to_right,rgba(51,65,85,0.35)_1px,transparent_1px),linear-gradient(to_bottom,rgba(51,65,85,0.35)_1px,transparent_1px)]"></div>
+        <div className="absolute left-[8%] top-10 h-[340px] w-[340px] rounded-full bg-cyan-300/25 blur-[120px] dark:bg-cyan-500/12"></div>
+        <div className="absolute right-[10%] top-[20%] h-[260px] w-[260px] rounded-full bg-amber-200/30 blur-[120px] dark:bg-amber-400/10"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-0 sm:px-6 lg:px-8 py-0 lg:py-16">
@@ -1070,46 +1205,40 @@ const Layout = ({ children }) => {
             <div className="lg:sticky lg:top-24 space-y-6">
               
               {/* Profile Card */}
-              <div className="bg-white dark:bg-[#0a0a0a] rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl text-center relative overflow-hidden group hover-scale animate-slide-in-left">
+              <div className="bg-white/80 dark:bg-slate-950/65 rounded-[2rem] p-8 border border-white/70 dark:border-white/10 shadow-[0_30px_80px_-42px_rgba(15,23,42,0.5)] text-center relative overflow-hidden group hover-scale animate-slide-in-left backdrop-blur-xl">
+                <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-br from-cyan-400/20 via-transparent to-emerald-300/15 dark:from-cyan-500/15 dark:to-emerald-400/10"></div>
                 <div className="w-40 h-40 mx-auto bg-slate-100 dark:bg-slate-900 rounded-[1.5rem] mb-6 overflow-hidden relative shadow-inner border border-slate-100 dark:border-slate-800 group-hover:scale-105 transition-transform duration-500">
                     <div className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-slate-300 dark:text-slate-700">KR</div>
-                    {/* Use a placeholder URL. If using local image, set this to: image: profilePic */}
                     <img src={profile.image} alt={profile.name} className="absolute inset-0 w-full h-full object-cover" />
                 </div>
                 
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 tracking-tight">{profile.name}</h1>
-
-                {/* Quick Action Links */}
-                <div className="grid grid-cols-[80px_1fr] gap-y-3 text-sm text-left w-full max-w-[240px] mx-auto mb-10">
-                  <span className="text-slate-400 dark:text-slate-500 font-medium text-xs uppercase tracking-wide pt-1">Download</span>
-                  <a href="#" className="text-blue-600 dark:text-blue-500 font-bold hover:underline flex items-center gap-1 group/link">
-                    Profile Pic <Download size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity" />
-                  </a>
-
-                  <span className="text-slate-400 dark:text-slate-500 font-medium text-xs uppercase tracking-wide pt-1">Get</span>
-                  <div className="flex flex-col gap-1">
-                     <a href="#" className="text-blue-600 dark:text-blue-500 font-bold hover:underline flex items-center gap-1 group/link">
-                       Resume <FileText size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity" />
-                     </a>
-                     <a href="#" className="text-blue-600 dark:text-blue-500 font-bold hover:underline flex items-center gap-1 group/link">
-                       CV <FileText size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity" />
-                     </a>
+                <div className="relative">
+                  <div className="mb-3 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.28em] text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    Available for collaboration
                   </div>
+                  <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{profile.name}</h1>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{profile.role}</p>
+                </div>
 
-                  <span className="text-slate-400 dark:text-slate-500 font-medium text-xs uppercase tracking-wide pt-1">Visit</span>
-                  <a href="#" className="text-blue-600 dark:text-blue-500 font-bold hover:underline flex items-center gap-1 group/link">
-                    Scholar <Globe size={12} className="opacity-0 group-hover/link:opacity-100 transition-opacity" />
-                  </a>
+                <div className="relative mt-8 grid grid-cols-2 gap-3 text-left">
+                  <div className="rounded-2xl border border-slate-200/80 bg-slate-50/90 px-4 py-4 dark:border-white/10 dark:bg-white/5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Based In</p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-white">Colombo, Sri Lanka</p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200/80 bg-slate-50/90 px-4 py-4 dark:border-white/10 dark:bg-white/5">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Focus</p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-white">AI, Full Stack, IoT</p>
+                  </div>
                 </div>
 
                 {/* Social Icons */}
-                <div className="flex justify-center gap-3 mb-8">
+                <div className="relative flex justify-center gap-3 my-8">
                   <a href={profile.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-[#0077b5] hover:text-white dark:hover:bg-[#0077b5] dark:hover:text-white transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"><Linkedin size={18} /></a>
                   <a href={profile.github} target="_blank" rel="noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800"><Github size={18} /></a>
                   <button onClick={() => setDarkMode(!darkMode)} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-900 hover:bg-amber-100 hover:text-amber-600 dark:hover:bg-amber-900/30 dark:hover:text-amber-400 transition-all text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">{darkMode ? <Sun size={18} /> : <Moon size={18} />}</button>
                 </div>
 
-                <a href={`mailto:${profile.email}`} className="block w-full py-4 px-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-black rounded-xl font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-slate-200 dark:shadow-none">Contact Me</a>
+                <a href={`mailto:${profile.email}`} className="relative block w-full py-4 px-4 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-200 text-white dark:text-black rounded-2xl font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-slate-200 dark:shadow-none">Contact Me</a>
               </div>
             </div>
           </div>
@@ -1122,7 +1251,7 @@ const Layout = ({ children }) => {
              {/* <BottomNav /> */}
 
              {/* Footer */}
-             <footer className="pt-16 pb-8 border-t border-slate-200 dark:border-slate-800 text-center mt-12 opacity-60">
+             <footer className="pt-16 pb-8 border-t border-slate-200/80 dark:border-slate-800 text-center mt-12 opacity-70">
               <p className="text-xs text-slate-400 dark:text-slate-600">
                 © {new Date().getFullYear()} Kavindu Ranasinghe.
               </p>
@@ -1138,15 +1267,16 @@ const Layout = ({ children }) => {
 
 export default function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
+      <ScrollToTop />
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/experience" element={<Experience />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/" element={<Navigate to="/about" replace />} />
+          <Route path="/community" element={<Navigate to="/volunteering" replace />} />
+          {navItems.map((item) => (
+            <Route key={item.path} path={item.path} element={routeElements[item.path]} />
+          ))}
+          <Route path="*" element={<Navigate to="/about" replace />} />
         </Routes>
       </Layout>
     </Router>
