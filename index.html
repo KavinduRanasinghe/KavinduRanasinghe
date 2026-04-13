@@ -12,9 +12,13 @@
         const redirect = sessionStorage.getItem('gh-pages-path');
         if (!redirect) return;
 
+        const knownRoutes = ['about', 'projects', 'experience', 'volunteering', 'gallery', 'contact'];
+        const [firstSegment = ''] = window.location.pathname.split('/').filter(Boolean);
+        const base = firstSegment && !knownRoutes.includes(firstSegment) ? `/${firstSegment}` : '';
+
         sessionStorage.removeItem('gh-pages-path');
         const target = redirect.startsWith('/') ? redirect : `/${redirect}`;
-        window.history.replaceState(null, '', target);
+        window.history.replaceState(null, '', `${base}${target}`);
       })();
     </script>
   </head>

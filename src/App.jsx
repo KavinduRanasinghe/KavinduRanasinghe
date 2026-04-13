@@ -51,6 +51,15 @@ const navItems = [
   { path: '/contact', label: 'Contact', title: 'Contact' },
 ];
 
+const appRouteSegments = navItems.map((item) => item.path.replace(/^\//, ''));
+
+const resolveRouterBase = () => {
+  if (typeof window === 'undefined') return '';
+
+  const [firstSegment = ''] = window.location.pathname.split('/').filter(Boolean);
+  return firstSegment && !appRouteSegments.includes(firstSegment) ? `/${firstSegment}` : '';
+};
+
 const highlights = [
   { date: "2025", text: "Appointed Section Lead for IEEEXtreme 19.0, leading national initiatives.", type: "Leadership" },
   { date: "Present", text: "Conducting research on real-time IoT data streaming for GIS applications.", type: "Research" },
@@ -1266,8 +1275,10 @@ const Layout = ({ children }) => {
 // --- Main App ---
 
 export default function App() {
+  const routerBase = resolveRouterBase();
+
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router basename={routerBase}>
       <ScrollToTop />
       <Layout>
         <Routes>
