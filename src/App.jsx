@@ -1177,7 +1177,8 @@ const DesktopNavbar = ({ darkMode, setDarkMode }) => {
 const Layout = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return window.localStorage.getItem('portfolio-theme') === 'dark';
+    const savedTheme = window.localStorage.getItem('portfolio-theme');
+    return savedTheme ? savedTheme === 'dark' : true;
   });
 
   useEffect(() => {
