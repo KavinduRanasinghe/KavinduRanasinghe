@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/kavinduranasinghe.png" width="180" alt="Kavindu Ranasinghe"/>
-</p>
-
 <h1 align="center">Hey 👋 I'm Kavindu Ranasinghe</h1>
 
 <p align="center">
