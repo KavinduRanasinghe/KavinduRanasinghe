@@ -107,10 +107,19 @@ const certifications = [
 ];
 
 const experience = [
+ {
+    company: "IdeaHub PVT LTD",
+    role: "Software Engineer",
+    period: "May 2026 - Present",
+    type: "Full-time",
+    location: "Colombo, Sri Lanka",
+    desc: "Specializing in full-stack development (.NET) for enterprise applications in an agile environment. Contributing to high-performance microservices and scalable architecture."
+  },
+
   {
     company: "HCLTech Sri Lanka",
     role: "Associate Software Engineer",
-    period: "May 2023 - Present",
+    period: "May 2023 - May 2026",
     type: "Full-time",
     location: "Colombo, Sri Lanka",
     desc: "Specializing in full-stack development (Java, Spring Boot) for enterprise applications in an agile environment. Contributing to high-performance microservices and scalable architecture."
