@@ -206,6 +206,7 @@ const researchProjects = [
 ];
 
 const community = [
+  {role: "Region 10 Co-Lead",org: "IEEEXtreme 20.0",period: "2026",category: "IEEE",type: "Leadership",color: "bg-[#00629B]",logo: "https://cdn.simpleicons.org/ieee/white",desc: "Co-leading the competitive programming community across IEEE Region 10, fostering engagement, collaboration, and participation in IEEEXtreme 20.0."},
   { role: "Technical Activities Vice Chair", org: "IEEE Sri Lanka Student Activities Committee", period: "2026", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Serving as Technical Activities Vice Chair and supporting the organization of TechFest Sri Lanka 2026." },
   { role: "TechX Outreach Lead", org: "IEEE CS SYP", period: "2026", category: "IEEE", type: "Outreach", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Serving as Outreach Lead for IEEE CS SYP TechX, supporting visibility, community engagement, and outreach efforts around the program." },
   { role: "Section Lead (IEEEXtreme 19.0)", org: "IEEE Sri Lanka Section", period: "2025", category: "IEEE", type: "Leadership", color: "bg-[#00629B]", logo: "https://cdn.simpleicons.org/ieee/white", desc: "Led the national IEEEXtreme 19.0 effort, launched XtremeDiaries, collaborated with 23 universities, supported the full ambassador network, and helped Sri Lanka reach the 3rd highest participant count globally with 42% student-member participation." },
