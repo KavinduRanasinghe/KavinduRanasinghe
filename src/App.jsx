@@ -152,6 +152,13 @@ const experience = [
 
 const researchProjects = [
   {
+    title: "ASolarX",
+    tag: "Final Year Project",
+    period: "May 2025 - Mar 2026 (Completed)",
+    desc: "An explainable off-grid solar energy management system. Developed as the Final Year Project (FYP) at Informatics Institute of Technology (IIT) Sri Lanka.",
+    tech: ["React.js", "Flask", "JWT", "Research"]
+  },
+  {
     title: "MZ-GenAI - Mondelez",
     tag: "Desktop App",
     period: "Completed",
@@ -242,47 +249,56 @@ const sessions = [
 ];
 
 
-// --- Gallery Data ---
 const galleryImages = [
   { 
     src: roboticsLabImg, 
-    caption: "Robotics Lab Session" 
+    caption: "Robotics Lab Session",
+    category: "STEMUP"
   },
   { 
     src: ieeeWebmasterImg, 
-    caption: "IEEE Student Branch Webmaster" 
+    caption: "IEEE Student Branch Webmaster",
+    category: "IEEE"
   },
   { 
     src: wayaxtremeImg, 
-    caption: "Organizing WayaXtreme 1.0" 
+    caption: "Organizing WayaXtreme 1.0",
+    category: "IEEE"
   },
   { 
     src: xtremeAmbassadorImg, 
-    caption: "IEEEXtreme Ambassador" 
+    caption: "IEEEXtreme Ambassador",
+    category: "IEEE"
   },
   { 
     src: stemupImg, 
-    caption: "STEMUP Educational Session" 
+    caption: "STEMUP Educational Session",
+    category: "STEMUP"
   },
   { 
     src: stemup1Img, 
-    caption: "Mentoring Students at STEMUP" 
+    caption: "Mentoring Students at STEMUP",
+    category: "STEMUP"
   },
   { 
     src: mlsaImg, 
-    caption: "Microsoft Student Ambassador Event" 
+    caption: "Microsoft Student Ambassador Event",
+    category: "MLSA"
   },
   { 
     src: sedsExcomImg, 
-    caption: "SEDS Executive Committee" 
+    caption: "SEDS Executive Committee",
+    category: "SEDS"
   },
   { 
     src: techxImg, 
-    caption: "TechX Session" 
+    caption: "TechX Session",
+    category: "IEEE"
   },
   { 
     src: maySedsImg, 
-    caption: "SEDS May Gathering" 
+    caption: "SEDS May Gathering",
+    category: "SEDS"
   },
 ];
 
@@ -1081,7 +1097,22 @@ const Community = () => {
 };
 
 const Gallery = () => {
+  const [activeFilter, setActiveFilter] = useState('All');
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
+  const filters = ['All', 'IEEE', 'MLSA', 'SEDS', 'STEMUP'];
+
+  const filterAccent = {
+    All: 'from-slate-900 to-slate-700 dark:from-slate-800 dark:to-slate-950 text-white shadow-slate-500/10 border-transparent',
+    IEEE: 'from-[#00629B] to-sky-500 text-white shadow-blue-500/20 border-transparent',
+    MLSA: 'from-[#0078D4] to-cyan-500 text-white shadow-cyan-500/20 border-transparent',
+    SEDS: 'from-slate-900 to-indigo-900 text-white shadow-indigo-500/20 border-transparent',
+    STEMUP: 'from-emerald-600 to-lime-500 text-white shadow-emerald-500/20 border-transparent',
+  };
+
+  const filteredImages = activeFilter === 'All'
+    ? galleryImages
+    : galleryImages.filter(img => img.category === activeFilter);
 
   const openLightbox = (index) => {
     setSelectedImageIndex(index);
@@ -1094,13 +1125,13 @@ const Gallery = () => {
   };
 
   const nextImage = (e) => {
-    e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev + 1) % galleryImages.length);
+    if (e) e.stopPropagation();
+    setSelectedImageIndex((prev) => (prev + 1) % filteredImages.length);
   };
 
   const prevImage = (e) => {
-    e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+    if (e) e.stopPropagation();
+    setSelectedImageIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
   };
 
   useEffect(() => {
@@ -1112,67 +1143,140 @@ const Gallery = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImageIndex]);
+  }, [selectedImageIndex, filteredImages]);
 
   return (
-    <div>
+    <div className="space-y-10">
       <PageHeader title="Gallery" subtitle="Capturing moments from my journey in volunteering, technology, and leadership." />
+
+      {/* Gallery Filter controls */}
+      <div className="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.35)] backdrop-blur-xl opacity-0 animate-fade-in-up dark:border-white/10 dark:bg-slate-950/60 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Visual Timeline</p>
+          <h3 className="mt-1 text-base font-extrabold text-slate-900 dark:text-white">Highlights and event snapshots</h3>
+        </div>
+        
+        <div className="flex flex-wrap gap-1.5">
+          {filters.map(filter => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setSelectedImageIndex(null);
+                }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 hover:scale-[1.02] ${
+                  isActive 
+                    ? `bg-gradient-to-r ${filterAccent[filter]} shadow-lg shadow-black/5`
+                    : 'bg-white/95 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                {filter}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Masonry Columns Grid */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-        {galleryImages.map((img, index) => (
+        {filteredImages.map((img, index) => (
           <div 
             key={index} 
             onClick={() => openLightbox(index)}
-            className={`break-inside-avoid relative group rounded-2xl overflow-hidden cursor-zoom-in opacity-0 animate-fade-in-up animate-stagger-${index % 4 + 1}`}
+            className={`break-inside-avoid relative group rounded-3xl overflow-hidden cursor-zoom-in border border-slate-200 dark:border-slate-800/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)] opacity-0 animate-fade-in-up animate-stagger-${index % 4 + 1}`}
           >
-            <img src={img.src} alt={img.caption} className="w-full h-auto transition-transform duration-500 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-medium text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{img.caption}</p>
+            {/* Hover Action Badges */}
+            <div className="absolute top-4 left-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-[9px] font-extrabold uppercase tracking-widest bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-full border border-white/10">
+                {img.category}
+              </span>
+            </div>
+            <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 text-white">
+              <Eye size={14} />
+            </div>
+
+            <img src={img.src} alt={img.caption} className="w-full h-auto transition-transform duration-500 group-hover:scale-105" />
+            
+            {/* Sliding text overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <p className="text-white font-bold text-base leading-snug translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                {img.caption}
+              </p>
+              <p className="text-slate-300 text-[10px] font-extrabold uppercase tracking-widest mt-1 translate-y-3 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                {img.category} Community
+              </p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Modern Lightbox Modal */}
       {selectedImageIndex !== null && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fade-in"
           onClick={closeLightbox}
         >
+          {/* Close button */}
           <button 
             onClick={closeLightbox}
-            className="absolute top-4 right-4 p-2 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all"
+            className="absolute top-6 right-6 p-2.5 text-white/70 hover:text-white bg-white/5 hover:bg-white/15 rounded-full transition-all border border-white/10"
+            title="Close Lightbox"
           >
-            <X size={24} />
+            <X size={20} />
           </button>
 
+          {/* Left Arrow */}
           <button 
             onClick={prevImage}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all hidden md:block"
+            className="absolute left-6 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/15 rounded-full transition-all border border-white/10 hidden md:block"
+            title="Previous Image"
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={24} />
           </button>
 
+          {/* Right Arrow */}
           <button 
             onClick={nextImage}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all hidden md:block"
+            className="absolute right-6 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/15 rounded-full transition-all border border-white/10 hidden md:block"
+            title="Next Image"
           >
-            <ChevronLeft className="rotate-180" size={32} />
+            <ChevronLeft className="rotate-180" size={24} />
           </button>
 
+          {/* Image & Text Container */}
           <div 
-            className="relative max-w-5xl max-h-[85vh] w-full flex flex-col items-center" 
+            className="relative max-w-5xl max-h-[80vh] w-full flex flex-col items-center justify-center" 
             onClick={(e) => e.stopPropagation()}
           >
             <img 
-              src={galleryImages[selectedImageIndex].src} 
-              alt={galleryImages[selectedImageIndex].caption} 
-              className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+              src={filteredImages[selectedImageIndex].src} 
+              alt={filteredImages[selectedImageIndex].caption} 
+              className="max-w-full max-h-[70vh] object-contain rounded-2xl shadow-2xl border border-white/5"
             />
-            <div className="mt-4 text-center">
-              <p className="text-white text-lg font-medium">{galleryImages[selectedImageIndex].caption}</p>
-              <p className="text-white/50 text-sm mt-1">
-                {selectedImageIndex + 1} / {galleryImages.length}
-              </p>
+            
+            <div className="mt-6 text-center max-w-xl">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest bg-white/10 text-white px-2.5 py-0.5 rounded-full border border-white/15">
+                {filteredImages[selectedImageIndex].category}
+              </span>
+              <p className="text-white text-lg font-bold mt-2 leading-relaxed">{filteredImages[selectedImageIndex].caption}</p>
+              
+              {/* Pagination Dots */}
+              <div className="flex justify-center gap-1.5 mt-4">
+                {filteredImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImageIndex(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === selectedImageIndex 
+                        ? 'w-4 bg-white' 
+                        : 'w-1.5 bg-white/30 hover:bg-white/50'
+                    }`}
+                    title={`Slide ${i + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -1306,7 +1410,9 @@ const MobileNavbar = ({ darkMode, setDarkMode }) => {
     <div className="lg:hidden sticky top-0 z-40 mb-8">
       <div className="mx-4 mt-4 rounded-[1.6rem] border border-white/70 bg-white/80 px-4 py-3 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75 flex items-center justify-between">
          <div className="font-bold text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-emerald-400 text-sm text-white shadow-lg shadow-cyan-500/30">KR</span>
+            <div className="h-9 w-9 rounded-2xl overflow-hidden shadow-lg shadow-cyan-500/30 border border-white/20 flex items-center justify-center bg-slate-100 dark:bg-slate-900 shrink-0">
+               <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
+            </div>
             <span className="hidden sm:inline">Kavindu.</span>
          </div>
          
@@ -1351,8 +1457,8 @@ const MobileNavbar = ({ darkMode, setDarkMode }) => {
 const DesktopNavbar = ({ darkMode, setDarkMode }) => {
   return (
     <div className="hidden lg:flex fixed top-6 left-1/2 -translate-x-1/2 z-50 items-center gap-1 p-2 rounded-full border border-white/70 bg-white/80 shadow-[0_28px_80px_-42px_rgba(15,23,42,0.55)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75">
-      <div className="ml-1 mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-emerald-400 text-xs font-bold text-white shadow-lg shadow-cyan-500/30">
-        KR
+      <div className="ml-1 mr-2 h-10 w-10 rounded-full overflow-hidden shadow-lg shadow-cyan-500/30 border border-white/20 flex items-center justify-center bg-slate-100 dark:bg-slate-900 shrink-0">
+         <img src={profile.image} alt={profile.name} className="w-full h-full object-cover" />
       </div>
       <div className="flex items-center gap-1 px-2">
          {navItems.map((item) => (
