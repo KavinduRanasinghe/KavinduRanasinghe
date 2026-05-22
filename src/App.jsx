@@ -729,151 +729,349 @@ const Experience = () => (
 
 const Community = () => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [viewMode, setViewMode] = useState('grid');
+
   const filters = ['All', 'IEEE', 'MLSA', 'SEDS', 'STEMUP', 'AIESEC'];
+
   const filterAccent = {
-    All: 'from-slate-900 to-slate-700 dark:from-white dark:to-slate-200',
-    IEEE: 'from-[#00629B] to-sky-500',
-    MLSA: 'from-[#0078D4] to-cyan-500',
-    SEDS: 'from-slate-900 to-slate-700',
-    STEMUP: 'from-emerald-600 to-lime-500',
-    AIESEC: 'from-[#037Ef3] to-sky-400',
+    All: 'from-slate-900 to-slate-700 dark:from-slate-800 dark:to-slate-950 text-white shadow-slate-500/10 border-transparent',
+    IEEE: 'from-[#00629B] to-sky-500 text-white shadow-blue-500/20 border-transparent',
+    MLSA: 'from-[#0078D4] to-cyan-500 text-white shadow-cyan-500/20 border-transparent',
+    SEDS: 'from-slate-900 to-indigo-900 text-white shadow-indigo-500/20 border-transparent',
+    STEMUP: 'from-emerald-600 to-lime-500 text-white shadow-emerald-500/20 border-transparent',
+    AIESEC: 'from-[#037Ef3] to-sky-400 text-white shadow-sky-500/20 border-transparent',
+  };
+
+  const categoryColors = {
+    IEEE: 'from-blue-600/5 to-sky-500/5 border-blue-500/20 hover:border-blue-500 hover:shadow-[0_20px_50px_rgba(0,98,155,0.12)] dark:hover:shadow-[0_20px_50px_rgba(0,98,155,0.06)]',
+    MLSA: 'from-[#0078D4]/5 to-cyan-500/5 border-[#0078D4]/20 hover:border-[#0078D4] hover:shadow-[0_20px_50px_rgba(0,120,212,0.12)] dark:hover:shadow-[0_20px_50px_rgba(0,120,212,0.06)]',
+    SEDS: 'from-slate-900/10 to-indigo-950/5 border-slate-700/30 hover:border-slate-900 dark:hover:border-slate-100 hover:shadow-[0_20px_50px_rgba(99,102,241,0.12)] dark:hover:shadow-[0_20px_50px_rgba(99,102,241,0.06)]',
+    STEMUP: 'from-emerald-600/5 to-lime-500/5 border-emerald-600/20 hover:border-emerald-600 hover:shadow-[0_20px_50px_rgba(16,185,129,0.12)] dark:hover:shadow-[0_20px_50px_rgba(16,185,129,0.06)]',
+    AIESEC: 'from-[#037Ef3]/5 to-sky-400/5 border-[#037Ef3]/20 hover:border-[#037Ef3] hover:shadow-[0_20px_50px_rgba(3,126,243,0.12)] dark:hover:shadow-[0_20px_50px_rgba(3,126,243,0.06)]',
+  };
+
+  const getBrandShadow = (category) => {
+    switch (category) {
+      case 'IEEE': return 'group-hover:shadow-[0_0_20px_rgba(0,98,155,0.3)]';
+      case 'MLSA': return 'group-hover:shadow-[0_0_20px_rgba(0,120,212,0.3)]';
+      case 'SEDS': return 'group-hover:shadow-[0_0_20px_rgba(128,90,213,0.3)]';
+      case 'STEMUP': return 'group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]';
+      case 'AIESEC': return 'group-hover:shadow-[0_0_20px_rgba(3,126,243,0.3)]';
+      default: return 'group-hover:shadow-lg';
+    }
+  };
+
+  const highlightText = (text) => {
+    if (!text) return '';
+    const regex = /(\b\d+(?:\.\d+)?%?|\b\d+st|\b\d+nd|\b\d+rd|\b\d+th\b|\b\d+\+\b|\bLead\b|\bCo-Lead\b|\bAmbassador\b|\bChairperson\b|\bChair\b|\bWebmaster\b|\bVice Chair\b|\bFounding Chair\b|\b3rd highest\b)/gi;
+    const parts = text.split(regex);
+    return parts.map((part, i) => {
+      if (regex.test(part)) {
+        return (
+          <span key={i} className="font-semibold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800/80 px-1 rounded transition-colors duration-200">
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
+
+  const getSessionIcon = (title, category) => {
+    const t = title.toLowerCase();
+    const c = category.toLowerCase();
+    if (t.includes('python')) return <Terminal size={20} className="text-blue-500 dark:text-blue-400" />;
+    if (t.includes('arduino') || t.includes('iot') || t.includes('microbits')) return <Cpu size={20} className="text-emerald-500 dark:text-emerald-400" />;
+    if (t.includes('scratch')) return <Code size={20} className="text-amber-500 dark:text-amber-400" />;
+    if (c.includes('career') || t.includes('career')) return <Briefcase size={20} className="text-purple-500 dark:text-purple-400" />;
+    return <Presentation size={20} className="text-pink-500 dark:text-pink-400" />;
   };
 
   const filteredCommunity = activeFilter === 'All' 
     ? community 
     : community.filter(item => item.category === activeFilter);
 
+  // Dynamic Dashboard metrics
+  const totalRoles = community.length;
+  const leadershipRolesCount = community.filter(item => 
+    item.type.toLowerCase().includes('lead') || 
+    item.role.toLowerCase().includes('lead') || 
+    item.role.toLowerCase().includes('chair') || 
+    item.role.toLowerCase().includes('coordinator')
+  ).length;
+  const workshopsCount = sessions.length;
+  const orgsCount = new Set(community.map(item => item.category)).size;
+
+  const stats = [
+    { label: 'Total Positions', value: totalRoles, icon: <Layers size={20} />, color: 'from-blue-500 to-indigo-500 text-blue-500 dark:text-blue-400 border-blue-500/10' },
+    { label: 'Leadership Roles', value: leadershipRolesCount, icon: <Users size={20} />, color: 'from-amber-500 to-orange-500 text-amber-500 dark:text-amber-400 border-amber-500/10' },
+    { label: 'Speaking & Workshops', value: workshopsCount, icon: <Mic size={20} />, color: 'from-pink-500 to-rose-500 text-pink-500 dark:text-pink-400 border-pink-500/10' },
+    { label: 'Communities Served', value: orgsCount, icon: <Globe size={20} />, color: 'from-emerald-500 to-teal-500 text-emerald-500 dark:text-emerald-400 border-emerald-500/10' }
+  ];
+
   return (
-    <div>
-      <PageHeader title="Volunteer Section" subtitle="Roles undertaken willingly, without pay, to give back to the community." />
+    <div className="space-y-12">
+      <PageHeader title="Volunteer Section" subtitle="Roles undertaken willingly, without pay, to give back to the community and empower future tech generations." />
       
-      <div className="mb-10 rounded-[1.8rem] border border-white/70 bg-white/75 p-4 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.35)] backdrop-blur-xl opacity-0 animate-fade-in-up dark:border-white/10 dark:bg-slate-950/60">
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Browse Roles</p>
-            <h3 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">Volunteer history across communities and programs</h3>
+      {/* Stats Dashboard */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-0 animate-fade-in-up">
+        {stats.map((stat, idx) => (
+          <div key={idx} className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-md dark:border-white/10 dark:bg-slate-950/60 hover-scale">
+            <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${stat.color.split(' ')[0]} opacity-5 rounded-bl-full`}></div>
+            <div className="flex items-center justify-between mb-3">
+              <div className={`p-2.5 rounded-xl bg-slate-50 dark:bg-white/5 ${stat.color.split(' ').slice(2).join(' ')} group-hover:scale-110 transition-transform duration-300`}>
+                {stat.icon}
+              </div>
+              <span className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">{stat.value}</span>
+            </div>
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 tracking-wide">{stat.label}</p>
           </div>
-          <div className="inline-flex items-center self-start rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600 dark:border-slate-800 dark:bg-white/5 dark:text-slate-300">
-            {filteredCommunity.length} roles
+        ))}
+      </div>
+
+      {/* Filter and View Toggle Header */}
+      <div className="rounded-3xl border border-white/70 bg-white/75 p-5 shadow-[0_24px_60px_-38px_rgba(15,23,42,0.35)] backdrop-blur-xl opacity-0 animate-fade-in-up dark:border-white/10 dark:bg-slate-950/60">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-4">
+          <div>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">Explore Contributions</p>
+            <h3 className="mt-1 text-lg font-extrabold text-slate-900 dark:text-white">Volunteer history across communities</h3>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 dark:border-slate-800 dark:bg-white/5 dark:text-slate-300">
+              {filteredCommunity.length} {filteredCommunity.length === 1 ? 'role' : 'roles'}
+            </span>
+            
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+              <button 
+                onClick={() => setViewMode('grid')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  viewMode === 'grid' 
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' 
+                    : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                <LayoutIcon size={14} /> Grid
+              </button>
+              <button 
+                onClick={() => setViewMode('timeline')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  viewMode === 'timeline' 
+                    ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' 
+                    : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                <Clock size={14} /> Timeline
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-        {filters.map(filter => (
-          <button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-              activeFilter === filter 
-                ? `bg-gradient-to-r ${filterAccent[filter]} text-white dark:text-slate-950 shadow-lg shadow-slate-200 dark:shadow-none scale-[1.02] border-transparent`
-                : 'bg-white/90 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
-            }`}
-          >
-            {filter}
-          </button>
-        ))}
+        <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+          {filters.map(filter => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 hover:scale-[1.02] ${
+                  isActive 
+                    ? `bg-gradient-to-r ${filterAccent[filter]} shadow-lg shadow-black/5`
+                    : 'bg-white/95 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                {filter}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 mb-16">
-        {filteredCommunity.length > 0 ? (
-          filteredCommunity.map((item, index) => (
-            <article key={index} className="group opacity-0 animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
-              <div className="rounded-[1.85rem] border border-white/70 bg-white/80 p-6 shadow-[0_26px_70px_-42px_rgba(15,23,42,0.45)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_30px_90px_-44px_rgba(8,145,178,0.35)] dark:border-white/10 dark:bg-slate-950/60 dark:hover:border-cyan-800/50 md:p-7">
-              <div className="flex flex-col gap-5 md:grid md:grid-cols-[84px_minmax(0,1fr)] md:items-start">
-              <div className="flex items-start justify-between gap-4 md:block">
-              <div className={`shrink-0 h-16 w-16 flex items-center justify-center rounded-2xl ${item.color} text-white shadow-lg overflow-hidden ring-1 ring-black/5 dark:ring-white/10`}>
-                  {item.logo ? (
-                    <img src={item.logo} alt={item.org} className="w-10 h-10 object-contain" />
-                  ) : (
-                    item.icon
-                  )}
-              </div>
-              <div className="flex flex-wrap gap-2 md:mt-4">
-                <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500 dark:border-slate-800 dark:bg-white/5 dark:text-slate-400">
-                  {item.category}
-                </span>
-                <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500 dark:border-slate-800 dark:bg-white/5 dark:text-slate-400">
-                  {item.type}
-                </span>
-              </div>
-              </div>
+      {/* Main Roles Display */}
+      {filteredCommunity.length > 0 ? (
+        viewMode === 'grid' ? (
+          /* Grid View Layout */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {filteredCommunity.map((item, index) => {
+              const brandColorCard = categoryColors[item.category] || 'from-slate-50 to-slate-100 border-slate-200';
+              return (
+                <article 
+                  key={index} 
+                  className={`group opacity-0 animate-fade-in-up flex flex-col justify-between rounded-3xl border bg-gradient-to-br ${brandColorCard} p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] backdrop-blur-md dark:bg-slate-950/40 hover:-translate-y-1 transition-all duration-300`}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <div>
+                    {/* Top Row: Logo & Categories */}
+                    <div className="flex items-center justify-between gap-4 mb-5">
+                      <div className={`shrink-0 h-12 w-12 flex items-center justify-center rounded-2xl ${item.color} text-white shadow-md ring-2 ring-white dark:ring-slate-900 transition-all duration-300 ${getBrandShadow(item.category)}`}>
+                        {item.logo ? (
+                          <img src={item.logo} alt={item.org} className="w-7 h-7 object-contain" />
+                        ) : (
+                          item.icon
+                        )}
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-1.5 justify-end">
+                        <span className="text-[9px] font-extrabold uppercase tracking-widest bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                          {item.category}
+                        </span>
+                        <span className="text-[9px] font-extrabold uppercase tracking-widest bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                          {item.type}
+                        </span>
+                      </div>
+                    </div>
 
-              <div className="min-w-0">
-                <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
-                  <h4 className="max-w-3xl text-xl font-bold leading-tight text-slate-900 transition-colors group-hover:text-cyan-700 dark:text-white dark:group-hover:text-cyan-300 flex items-center gap-2">
-                    {item.role}
-                    {item.link && (
-                      <a href={item.link} target="_blank" rel="noreferrer" className="shrink-0 text-slate-400 transition-colors hover:text-cyan-600 dark:hover:text-cyan-400" title="View Certificate">
-                        <ExternalLink size={16} />
-                      </a>
-                    )}
-                  </h4>
-                  <span className="inline-flex items-center self-start text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-[0.24em] bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-full mt-1 xl:mt-0 whitespace-nowrap">
-                    {item.period}
+                    {/* Role Title and Org */}
+                    <div className="space-y-1 mb-4">
+                      <h4 className="text-lg font-bold leading-snug text-slate-950 dark:text-white transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-300 flex items-center gap-1.5">
+                        <span className="line-clamp-2">{item.role}</span>
+                        {item.link && (
+                          <a href={item.link} target="_blank" rel="noreferrer" className="shrink-0 text-slate-400 transition-colors hover:text-cyan-600 dark:hover:text-cyan-400" title="View Certificate">
+                            <ExternalLink size={14} />
+                          </a>
+                        )}
+                      </h4>
+                      <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                        {item.org}
+                      </p>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-[13px] leading-relaxed text-slate-600 dark:text-slate-400 mb-6">
+                      {highlightText(item.desc)}
+                    </p>
+                  </div>
+
+                  {/* Period Footer */}
+                  <div className="pt-4 border-t border-slate-100 dark:border-slate-900 flex items-center justify-between text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                    <span className="flex items-center gap-1">
+                      <Calendar size={12} /> {item.period}
+                    </span>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          /* Chronological Timeline Layout */
+          <div className="relative border-l-[2px] border-slate-200 dark:border-slate-800/80 ml-4 md:ml-6 pl-8 md:pl-10 space-y-8 my-6">
+            {filteredCommunity.map((item, index) => {
+              const brandColorCard = categoryColors[item.category] || 'from-slate-50 to-slate-100 border-slate-200';
+              return (
+                <article 
+                  key={index} 
+                  className="relative group opacity-0 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {/* Timeline node */}
+                  <div className={`absolute -left-[41px] md:-left-[49px] top-1.5 h-[24px] w-[24px] rounded-full border-4 border-slate-50 dark:border-[#050505] ${item.color} shadow-md group-hover:scale-125 transition-transform duration-300 z-10 flex items-center justify-center`}>
+                    <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                  </div>
+
+                  <div className={`rounded-3xl border bg-gradient-to-br ${brandColorCard} p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] backdrop-blur-md dark:bg-slate-950/40 hover:-translate-y-0.5 transition-all duration-300`}>
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="flex items-start gap-4">
+                        <div className={`shrink-0 h-12 w-12 flex items-center justify-center rounded-2xl ${item.color} text-white shadow-md ring-2 ring-white dark:ring-slate-900`}>
+                          {item.logo ? (
+                            <img src={item.logo} alt={item.org} className="w-7 h-7 object-contain" />
+                          ) : (
+                            item.icon
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-slate-950 dark:text-white transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-300 flex items-center gap-1.5">
+                            {item.role}
+                            {item.link && (
+                              <a href={item.link} target="_blank" rel="noreferrer" className="shrink-0 text-slate-400 transition-colors hover:text-cyan-600 dark:hover:text-cyan-400" title="View Certificate">
+                                <ExternalLink size={14} />
+                              </a>
+                            )}
+                          </h4>
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm mt-0.5">
+                            <span className="font-semibold text-blue-600 dark:text-blue-400">{item.org}</span>
+                            <span className="hidden sm:inline w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                            <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{item.category} • {item.type}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="shrink-0">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800">
+                          <Calendar size={12} /> {item.period}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-[14px] leading-relaxed text-slate-600 dark:text-slate-400 pl-0 sm:pl-16">
+                      {highlightText(item.desc)}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )
+      ) : (
+        <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/20 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 opacity-0 animate-fade-in-up">
+          <Filter size={48} className="mx-auto text-slate-300 dark:text-slate-700 mb-4" />
+          <p className="text-slate-500 dark:text-slate-400 font-medium">No volunteering history found for {activeFilter} yet.</p>
+        </div>
+      )}
+
+      {/* Talks & Workshops Section */}
+      <div className="mt-20 opacity-0 animate-fade-in-up animate-stagger-2">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-pink-100 dark:bg-pink-900/20 text-pink-600 dark:text-pink-500 rounded-2xl">
+              <Presentation size={22} fill="currentColor" className="opacity-80" />
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Public Speaking & Workshops</h2>
+          </div>
+          <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider bg-slate-100 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800">
+            {sessions.length} sessions
+          </span>
+        </div>
+        
+        {/* Beautiful Workshop Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sessions.map((session, idx) => (
+            <div 
+              key={idx} 
+              className="group flex flex-col justify-between bg-white dark:bg-slate-950/50 rounded-3xl p-6 border border-slate-200 dark:border-slate-850 hover:border-pink-300 dark:hover:border-pink-900/40 hover:shadow-[0_20px_50px_rgba(244,63,94,0.06)] dark:hover:shadow-[0_20px_50px_rgba(244,63,94,0.03)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <div>
+                {/* Header: Icon & Date */}
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="p-2.5 bg-slate-50 dark:bg-white/5 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                    {getSessionIcon(session.title, session.category)}
+                  </div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider bg-slate-50 dark:bg-slate-900/60 text-slate-400 dark:text-slate-500 px-2.5 py-1 rounded-md border border-slate-100 dark:border-slate-800">
+                    {session.date}
                   </span>
                 </div>
 
-                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <p className="text-sm font-bold tracking-wide text-blue-600 dark:text-blue-400">
-                    {item.org}
-                  </p>
-                  <span className="hidden h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600 sm:block"></span>
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500">
-                    {item.category} Role
-                  </p>
-                </div>
-
-                <p className="max-w-4xl text-[15px] leading-7 text-slate-600 dark:text-slate-400">
-                  {item.desc}
-                </p>
-              </div>
-              </div>
-              </div>
-            </article>
-          ))
-        ) : (
-          <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/20 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 opacity-0 animate-fade-in-up">
-            <Filter size={48} className="mx-auto text-slate-300 dark:text-slate-700 mb-4" />
-            <p className="text-slate-500 dark:text-slate-400 font-medium">No volunteering history found for {activeFilter} yet.</p>
-          </div>
-        )}
-      </div>
-
-      {/* Talks & Workshops Section */}
-      <div className="mt-16 opacity-0 animate-fade-in-up animate-stagger-2">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-pink-100 dark:bg-pink-900/20 text-pink-600 dark:text-pink-500 rounded-lg">
-            <Presentation size={20} fill="currentColor" />
-          </div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Public Speaking & Workshops</h2>
-        </div>
-        
-        <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-3 space-y-10">
-          {sessions.map((session, idx) => (
-            <div key={idx} className="relative pl-8 hover-scale transition-transform origin-left">
-              <div className="absolute -left-[9px] top-1 w-[18px] h-[18px] rounded-full bg-white dark:bg-[#050505] border-[3px] border-pink-500 dark:border-pink-500 z-10"></div>
-              
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+                <h4 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors mb-1.5 line-clamp-2">
                   {session.title}
                 </h4>
-                <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">
-                  {session.date}
-                </span>
+
+                <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-4">
+                  {session.org}
+                </div>
+
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {session.desc}
+                </p>
               </div>
-              
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">{session.org}</span>
-                <span className="text-slate-300 dark:text-slate-600">•</span>
-                <span className="text-xs font-medium px-2 py-0.5 rounded bg-pink-50 dark:bg-pink-900/20 text-pink-700 dark:text-pink-300 border border-pink-100 dark:border-pink-800">
+
+              <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-900 flex items-center justify-between">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest bg-pink-50 dark:bg-pink-950/30 text-pink-600 dark:text-pink-400 px-2 py-0.5 rounded-full border border-pink-100/50 dark:border-pink-900/30">
                   {session.category}
                 </span>
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded-lg">
+                  {session.role || 'Instructor'}
+                </span>
               </div>
-              
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                {session.desc}
-              </p>
             </div>
           ))}
         </div>
