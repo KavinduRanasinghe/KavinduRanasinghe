@@ -1,7 +1,7 @@
 <h1 align="center">Hey 👋 I'm Kavindu Ranasinghe</h1>
 
 <p align="center">
-Software Developer | Backend Engineer | IEEE Technical Leader
+Software Developer | Backend Engineer | IEEE Volunteer
 </p>
 
 
